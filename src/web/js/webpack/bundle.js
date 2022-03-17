@@ -4200,10 +4200,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************!*\
   !*** ./js/Application.js ***!
   \***************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _common_js_Userinfo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/js/Userinfo */ "./common/js/Userinfo.js");
 /* harmony import */ var _common_js_toast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/js/toast */ "./common/js/toast.js");
 /* harmony import */ var _common_js_checkElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/js/checkElement */ "./common/js/checkElement.js");
@@ -4219,7 +4222,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_js_AuthorPage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../common/js/AuthorPage */ "./common/js/AuthorPage.js");
 /* harmony import */ var _common_js_AppSwitch__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../common/js/AppSwitch */ "./common/js/AppSwitch.js");
 /* harmony import */ var _common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../common/js/BackendStorage */ "./common/js/BackendStorage.js");
-/* module decorator */ module = __webpack_require__.hmd(module);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4480,7 +4482,7 @@ var Application = /*#__PURE__*/function () {
 }();
 
 var app = new Application();
-module.exports = app;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (app);
 
 /***/ }),
 
@@ -72381,15 +72383,12 @@ module.exports = JSON.parse('{"Aacute":"Á","aacute":"á","Abreve":"Ă","abreve"
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
 /******/ 			id: moduleId,
-/******/ 			loaded: false,
+/******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -72433,21 +72432,6 @@ module.exports = JSON.parse('{"Aacute":"Á","aacute":"á","Abreve":"Ă","abreve"
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/harmony module decorator */
-/******/ 	(() => {
-/******/ 		__webpack_require__.hmd = (module) => {
-/******/ 			module = Object.create(module);
-/******/ 			if (!module.children) module.children = [];
-/******/ 			Object.defineProperty(module, 'exports', {
-/******/ 				enumerable: true,
-/******/ 				set: () => {
-/******/ 					throw new Error('ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: ' + module.id);
-/******/ 				}
-/******/ 			});
-/******/ 			return module;
-/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -72602,7 +72586,7 @@ $(window).load(function () {
       // export all required classes for deserialize JSON with "eval".
       // "eval" code didn't sees imported class or code
       //
-      app = __webpack_require__(/*! ./Application */ "./js/Application.js");
+      app = (__webpack_require__(/*! ./Application */ "./js/Application.js")["default"]);
       app.init(permissions);
 
       (__webpack_require__(/*! ./hardware */ "./js/hardware.js").init)(socket);

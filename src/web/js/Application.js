@@ -228,4 +228,4 @@ class Application {
 }
 
 let app = new Application()
-module.exports = app
+export default app

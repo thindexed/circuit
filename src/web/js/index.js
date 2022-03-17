@@ -76,7 +76,7 @@ $(window).load(function () {
       // export all required classes for deserialize JSON with "eval".
       // "eval" code didn't sees imported class or code
       //
-      app = require("./Application")
+      app = require("./Application").default
       app.init(permissions)
       require("./hardware").init(socket)
       inlineSVG.init()
