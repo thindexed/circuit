@@ -6608,6 +6608,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Configuration__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Configuration */ "./js/Configuration.js");
 /* harmony import */ var _io_Writer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../io/Writer */ "./js/io/Writer.js");
+/* harmony import */ var _common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../common/js/BackendStorage */ "./common/js/BackendStorage.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -6617,6 +6618,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
+var t = (0,_common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_3__["default"])(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 var storage = __webpack_require__(/*! ../../common/js/BackendStorage.js */ "./common/js/BackendStorage.js")(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
