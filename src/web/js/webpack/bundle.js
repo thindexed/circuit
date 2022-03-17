@@ -72573,7 +72573,7 @@ $(window).load(function () {
 
     console.log(global);
 
-    for (var k in global) {
+    for (var k in global["default"]) {
       window[k] = global[k];
     } // we must load the "shape/index.js" in the global scope.
     //

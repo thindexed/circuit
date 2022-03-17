@@ -69,7 +69,7 @@ $(window).load(function () {
     //
     let global = require("./global")
     console.log(global)
-    for (let k in global) window[k] = global[k];
+    for (let k in global.default) window[k] = global[k];
 
     // we must load the "shape/index.js" in the global scope.
     //
