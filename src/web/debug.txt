@@ -1,0 +1,249 @@
+
+> circuit@1.0.0 build
+> webpack build
+
+assets by status 61.5 KiB [cached] 1 asset
+orphan modules 17.3 KiB [orphan] 10 modules
+runtime modules 937 bytes 4 modules
+modules by path ./src/ 98.3 KiB
+  modules by path ./src/*.js 81.3 KiB 12 modules
+  modules by path ./src/figures/*.js 11.5 KiB 4 modules
+  modules by path ./src/dialog/*.js 3.8 KiB 3 modules
+  modules by path ./src/util/*.js 1.71 KiB
+    ./src/util/mousetrap-global.js 1 KiB [built] [code generated]
+    ./src/util/mousetrap-pause.js 725 bytes [built] [code generated]
+modules with errors 6.22 KiB [errors]
+  ./less/index.less 1.04 KiB [built] [code generated] [1 error]
+  ./images/status_index.svg 1.24 KiB [built] [code generated] [1 error]
+  ./images/status_index_true.svg 1.94 KiB [built] [code generated] [1 error]
+  ./images/status_index_false.svg 2 KiB [built] [code generated] [1 error]
+
+WARNING in configuration
+The 'mode' option has not been set, webpack will fallback to 'production' for this value.
+Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/configuration/mode/
+
+ERROR in ./images/status_index.svg 1:0
+Module parse failed: Unexpected token (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+> <?xml version="1.0" encoding="UTF-8"?>
+| <svg width="55px" height="55px" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+|     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+ @ ./src/View.js 23:0-67 606:40-66
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./images/status_index_false.svg 1:0
+Module parse failed: Unexpected token (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+> <?xml version="1.0" encoding="UTF-8"?>
+| <svg width="55px" height="55px" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+|     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+ @ ./src/View.js 25:0-71 611:48-72
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./images/status_index_true.svg 1:0
+Module parse failed: Unexpected token (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+> <?xml version="1.0" encoding="UTF-8"?>
+| <svg width="55px" height="55px" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+|     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+ @ ./src/View.js 24:0-69 611:75-98
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./less/index.less 1:0
+Module parse failed: Unexpected character '@' (1:0)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+> @import "../../common/less/variables";
+| @import "variables";
+| 
+ @ ./src/index.js 2:0-27
+
+ERROR in ./src/Application.js 7:0-47
+Module not found: Error: Can't resolve '../../common/src/web/js/Userinfo' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 8:0-41
+Module not found: Error: Can't resolve '../../common/src/web/js/toast' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 9:0-55
+Module not found: Error: Can't resolve '../../common/src/web/js/checkElement' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 13:0-47
+Module not found: Error: Can't resolve '../../common/src/web/js/FilesScreen' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 18:0-58
+Module not found: Error: Can't resolve '../../common/src/web/js/LinkShareDialog' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 20:0-52
+Module not found: Error: Can't resolve '../../common/src/web/js/AuthorPage' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 21:0-50
+Module not found: Error: Can't resolve '../../common/src/web/js/AppSwitch' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/Application.js 22:14-55
+Module not found: Error: Can't resolve '../../common/src/web/js/BackendStorage' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/EditEditPolicy.js 1:0-55
+Module not found: Error: Can't resolve '../../common/src/web/js/MarkerFigure' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/View.js
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/Palette.js 2:0-29
+Module not found: Error: Can't resolve 'hogan.js' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/Application.js 11:0-31 39:23-30
+ @ ./src/index.js
+
+ERROR in ./src/Palette.js 3:0-35
+Module not found: Error: Can't resolve 'js-treeview' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/Application.js 11:0-31 39:23-30
+ @ ./src/index.js
+
+ERROR in ./src/ProbeWindow.js 1:0-36
+Module not found: Error: Can't resolve 'storage-helper' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/View.js 7:0-39 37:27-38
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/ProbeWindow.js 2:0-24
+Module not found: Error: Can't resolve 'd3' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/View.js 7:0-39 37:27-38
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/View.js 16:0-59
+Module not found: Error: Can't resolve '../../common/src/web/js/DesignerDialog' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/View.js 17:0-43
+Module not found: Error: Can't resolve '../../common/src/web/js/Colors' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/View.js 27:0-56
+Module not found: Error: Can't resolve 'bootstrap-toggle/css/bootstrap-toggle.min.css' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/View.js 28:0-51
+Module not found: Error: Can't resolve 'bootstrap-toggle/js/bootstrap-toggle.min' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/dialog/CodeDialog.js 1:0-50
+Module not found: Error: Can't resolve 'google-code-prettify/bin/prettify.min.css' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/dialog'
+ @ ./src/View.js 18:0-44 325:20-30
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/dialog/CodeDialog.js 3:0-65
+Module not found: Error: Can't resolve 'google-code-prettify/bin/prettify.min' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/dialog'
+ @ ./src/View.js 18:0-44 325:20-30
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/dialog/FigureConfigDialog.js 2:0-28
+Module not found: Error: Can't resolve 'hogan.js' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/dialog'
+ @ ./src/EditEditPolicy.js 2:0-60 103:10-33
+ @ ./src/View.js
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/dialog/FileSave.js 1:0-21
+Module not found: Error: Can't resolve 'path' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/dialog'
+
+BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
+This is no longer the case. Verify if you need this module and configure a polyfill for it.
+
+If you want to include a polyfill, you need to:
+	- add a fallback 'resolve.fallback: { "path": require.resolve("path-browserify") }'
+	- install 'path-browserify'
+If you don't want to include a polyfill, you can use an empty module like this:
+	resolve.fallback: { "path": false }
+ @ ./src/Application.js 17:0-40 198:6-19 201:6-19
+ @ ./src/index.js
+
+ERROR in ./src/dialog/FileSave.js 6:14-58
+Module not found: Error: Can't resolve '../../../common/src/web/js/BackendStorage' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/dialog'
+ @ ./src/Application.js 17:0-40 198:6-19 201:6-19
+ @ ./src/index.js
+
+ERROR in ./src/dialog/MarkdownDialog.js 1:0-44
+Module not found: Error: Can't resolve 'remarkable' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/dialog'
+ @ ./src/View.js 15:0-52 341:16-35
+ @ ./src/Application.js 12:0-25 40:20-24
+ @ ./src/index.js
+
+ERROR in ./src/global.js 1:0-49
+Module not found: Error: Can't resolve '../../common/src/web/js/inlineSVG' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 2:0-67
+Module not found: Error: Can't resolve '../../common/src/web/js/DecoratedInputPort' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 3:0-69
+Module not found: Error: Can't resolve '../../common/src/web/js/DecoratedOutputPort' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 4:0-55
+Module not found: Error: Can't resolve '../../common/src/web/js/MarkerFigure' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 5:0-67
+Module not found: Error: Can't resolve '../../common/src/web/js/MarkerStateAFigure' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 6:0-67
+Module not found: Error: Can't resolve '../../common/src/web/js/MarkerStateBFigure' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 14:0-33
+Module not found: Error: Can't resolve 'mousetrap' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 19:15-37
+Module not found: Error: Can't resolve 'markdown-it' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/global.js 20:13-45
+Module not found: Error: Can't resolve 'markdown-it-asciimath' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+ @ ./src/index.js
+
+ERROR in ./src/index.js 1:0-25
+Module not found: Error: Can't resolve 'axios' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+
+ERROR in ./src/index.js 3:0-42
+Module not found: Error: Can't resolve 'font-awesome/css/font-awesome.css' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+
+ERROR in ./src/index.js 6:0-28
+Module not found: Error: Can't resolve 'split.js' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+
+ERROR in ./src/index.js 8:0-44
+Module not found: Error: Can't resolve 'js-treeview/dist/treeview.min.css' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src'
+
+ERROR in ./src/view/AddonScreen.js 1:0-28
+Module not found: Error: Can't resolve 'hogan.js' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/view'
+ @ ./src/Application.js 14:0-39 42:25-31
+ @ ./src/index.js
+
+ERROR in ./src/view/AddonScreen.js 3:0-25
+Module not found: Error: Can't resolve 'axios' in '/Users/d023280/Documents/workspace/thindexed/thindexed-circuit/src/_web/src/view'
+ @ ./src/Application.js 14:0-39 42:25-31
+ @ ./src/index.js
+
+38 errors have detailed information that is not shown.
+Use 'stats.errorDetails: true' resp. '--stats-error-details' to show it.
+
+webpack 5.70.0 compiled with 42 errors and 1 warning in 1369 ms

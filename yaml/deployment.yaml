@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: circuit
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: circuit
+  template:
+    metadata:
+      labels:
+        name: circuit
+    spec:
+      containers:
+      - name: circuit
+        image: docker.io/freegroup/thindexed-home:0.1.0-18
