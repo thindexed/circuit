@@ -86,8 +86,10 @@ $(window).load(function () {
     }).fail(function () {
       if (arguments[0].readyState === 0) {
         //script failed to load
+        console.log("failed to load script")
       } else {
         //script loaded but failed to parse
+        console.log("failed to parse loaded script")
         alert(arguments[2].toString());
       }
     });
