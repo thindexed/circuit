@@ -2430,7 +2430,8 @@ var BackendStorage = /*#__PURE__*/function () {
   }]);
 
   return BackendStorage;
-}();
+}(); // export a function
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (conf) {
   return new BackendStorage(conf);
@@ -5679,7 +5680,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_status_index_true_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_status_index_true_svg__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _images_status_index_false_svg__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../images/status_index_false.svg */ "./images/status_index_false.svg");
 /* harmony import */ var _images_status_index_false_svg__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_images_status_index_false_svg__WEBPACK_IMPORTED_MODULE_16__);
-/* provided dependency */ var CircuitFigure = __webpack_require__(/*! ./figures/CircuitFigure */ "./js/figures/CircuitFigure.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -6618,7 +6618,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var storage = __webpack_require__(/*! ../../../common/js/BackendStorage */ "../common/js/BackendStorage.js")(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var storage = __webpack_require__(/*! ../../../common/js/BackendStorage.js */ "../common/js/BackendStorage.js")(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 var Dialog = /*#__PURE__*/function () {
   /**
