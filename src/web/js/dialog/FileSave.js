@@ -3,7 +3,7 @@ import fs from "path"
 import conf from "../Configuration"
 import writer from '../io/Writer'
 
-let storage = require('../../../common/js/BackendStorage.js')(conf)
+let storage = require('../../common/js/BackendStorage.js')(conf)
 
 class Dialog {
 

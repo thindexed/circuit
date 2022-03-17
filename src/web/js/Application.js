@@ -4,22 +4,22 @@
  *
  * @author Andreas Herz
  */
-import Userinfo from "../../common/js/Userinfo"
-import toast from "../../common/js/toast"
-import checkElement from "../../common/js/checkElement"
+import Userinfo from "../common/js/Userinfo"
+import toast from "../common/js/toast"
+import checkElement from "../common/js/checkElement"
 
 import Palette from "./Palette"
 import View from "./View"
-import Files from "../../common/js/FilesScreen"
+import Files from "../common/js/FilesScreen"
 import Addons from "./view/AddonScreen"
 import conf from "./Configuration"
 import reader from "./io/Reader"
 import fileSave from "./dialog/FileSave"
-import shareDialog from "../../common/js/LinkShareDialog";
+import shareDialog from "../common/js/LinkShareDialog";
 import writer from "./io/Writer";
-import AuthorPage from "../../common/js/AuthorPage";
-import AppSwitch from "../../common/js/AppSwitch";
-let storage = require('../../common/js/BackendStorage')(conf)
+import AuthorPage from "../common/js/AuthorPage";
+import AppSwitch from "../common/js/AppSwitch";
+let storage = require('../common/js/BackendStorage')(conf)
 
 
 class Application {
