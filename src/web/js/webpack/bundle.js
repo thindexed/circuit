@@ -2430,8 +2430,7 @@ var BackendStorage = /*#__PURE__*/function () {
   }]);
 
   return BackendStorage;
-}(); // export a function
-
+}();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (conf) {
   return new BackendStorage(conf);
@@ -6619,9 +6618,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var t = (0,_common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_3__["default"])(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-var storage = __webpack_require__(/*! ../../common/js/BackendStorage.js */ "./common/js/BackendStorage.js")(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var storage = (0,_common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_3__["default"])(_Configuration__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 var Dialog = /*#__PURE__*/function () {
   /**

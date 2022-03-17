@@ -88,5 +88,5 @@ class BackendStorage {
   }
 
 }
-// export a function
+
 export default conf => new BackendStorage(conf)

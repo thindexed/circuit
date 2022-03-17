@@ -4,9 +4,7 @@ import conf from "../Configuration"
 import writer from '../io/Writer'
 
 import storageFactory from '../../common/js/BackendStorage'
-let t = storageFactory(conf)
-
-let storage = require('../../common/js/BackendStorage.js')(conf)
+let storage = storageFactory(conf)
 
 class Dialog {
 

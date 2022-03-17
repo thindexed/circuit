@@ -1,6 +1,8 @@
 const path = require('path');
 
 const projectDir = path.resolve(__dirname)
+const commonDir =  path.resolve(__dirname+"../../../common/src/web/")
+console.log(commonDir)
 
 module.exports = {
   entry: projectDir + '/js/index.js',
@@ -12,7 +14,7 @@ module.exports = {
     filename: "bundle.js"
   },
   resolve: {
-    modules: [projectDir + '/node_modules', projectDir + '/src'],
+    modules: [projectDir + '/node_modules', projectDir + '/src/', commonDir],
     extensions: ['.json', '.js', '.css']
   },
   module: {
