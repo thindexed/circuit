@@ -72557,15 +72557,15 @@ if (!jQuery.browser) {
 
 
 $(window).load(function () {
-  /*
-  socket = io( { path: '/socket.io'})
-   socket.on("shape:updated", () => {
-    new UpdateSuccessDialog().show()
-  })
-  */
-  // Init the UI after we have receive the UI/UX permissions of this kind of installation
+  socket = io({
+    path: '/socket.io'
+  });
+  socket.on("shape:updated", function () {
+    new _dialog_UpdateSuccessDialog__WEBPACK_IMPORTED_MODULE_3__["default"]().show();
+  }); // Init the UI after we have receive the UI/UX permissions of this kind of installation
   // (fake event from the socket.io mock )
   //
+
   axios__WEBPACK_IMPORTED_MODULE_0___default().get("../permissions").then(function (response) {
     var permissions = response.data; // export all required classes for deserialize JSON with "eval"
     // "eval" code didn't sees imported class or code

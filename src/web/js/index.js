@@ -50,13 +50,13 @@ import conf from './Configuration'
 
 
 $(window).load(function () {
-  /*
+  
   socket = io( { path: '/socket.io'})
 
   socket.on("shape:updated", () => {
     new UpdateSuccessDialog().show()
   })
-  */
+  
 
   // Init the UI after we have receive the UI/UX permissions of this kind of installation
   // (fake event from the socket.io mock )
