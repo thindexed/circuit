@@ -3,7 +3,7 @@ import axios from "axios"
 import "./PopConfirm"
 import fs from "path"
 
-let inputPrompt =require("./InputPrompt")
+let inputPrompt =require("./InputPrompt").default
 
 export default class Files {
 
@@ -188,7 +188,7 @@ export default class Files {
   }
 
   initPane(scope, paneSelector, backendConf, permissions, initialPath) {
-    let storage = require("./BackendStorage")(this.conf)
+    let storage = require("./BackendStorage").default(this.conf)
     if(permissions.list===false){
       return
     }

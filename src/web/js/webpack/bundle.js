@@ -2791,7 +2791,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var inputPrompt = __webpack_require__(/*! ./InputPrompt */ "./common/js/InputPrompt.js");
+var inputPrompt = (__webpack_require__(/*! ./InputPrompt */ "./common/js/InputPrompt.js")["default"]);
 
 var Files = /*#__PURE__*/function () {
   /**
@@ -2923,7 +2923,7 @@ var Files = /*#__PURE__*/function () {
   }, {
     key: "initPane",
     value: function initPane(scope, paneSelector, backendConf, permissions, initialPath) {
-      var storage = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")(this.conf);
+      var storage = (__webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")["default"])(this.conf);
 
       if (permissions.list === false) {
         return;
