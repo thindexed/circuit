@@ -2835,6 +2835,8 @@ var Files = /*#__PURE__*/function () {
     value: function render(conf, permissions) {
       var _this2 = this;
 
+      var s = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js");
+
       var storage = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")(conf);
 
       this.initTabs(permissions);

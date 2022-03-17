@@ -100,6 +100,7 @@ export default class Files {
   }
 
   render(conf, permissions) {
+    let s =  require("./BackendStorage")
     let storage = require("./BackendStorage")(conf)
 
     this.initTabs(permissions)
