@@ -72571,6 +72571,8 @@ $(window).load(function () {
 
     var global = __webpack_require__(/*! ./global */ "./js/global.js");
 
+    console.log(global);
+
     for (var k in global) {
       window[k] = global[k];
     } // we must load the "shape/index.js" in the global scope.

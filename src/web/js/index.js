@@ -68,6 +68,7 @@ $(window).load(function () {
     // "eval" code didn't sees imported class or code
     //
     let global = require("./global")
+    console.log(global)
     for (let k in global) window[k] = global[k];
 
     // we must load the "shape/index.js" in the global scope.
