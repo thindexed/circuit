@@ -69,7 +69,7 @@ $(window).load(function () {
     //
     let global = require("./global")
     console.log(global)
-    for (let k in global.default) window[k] = global[k];
+    for (let k in global.default) window[k] = global.default[k];
     var s = document.createElement("script");
     s.setAttribute("src",conf.shapes.url + "index.js");
     s.onload = function(){

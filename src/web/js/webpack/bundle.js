@@ -72575,7 +72575,7 @@ $(window).load(function () {
     console.log(global);
 
     for (var k in global["default"]) {
-      window[k] = global[k];
+      window[k] = global["default"][k];
     }
 
     var s = document.createElement("script");
