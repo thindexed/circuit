@@ -72589,7 +72589,7 @@ $(window).load(function () {
       app = (__webpack_require__(/*! ./Application */ "./js/Application.js")["default"]);
       app.init(permissions);
 
-      (__webpack_require__(/*! ./hardware */ "./js/hardware.js").init)(socket);
+      (__webpack_require__(/*! ./hardware */ "./js/hardware.js")["default"].init)(socket);
 
       inlineSVG.init();
       $(".loader").fadeOut(500, function () {

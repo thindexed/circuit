@@ -78,7 +78,7 @@ $(window).load(function () {
       //
       app = require("./Application").default
       app.init(permissions)
-      require("./hardware").init(socket)
+      require("./hardware").default.init(socket)
       inlineSVG.init()
       $(".loader").fadeOut(500, function() { $(this).remove(); })
     }
