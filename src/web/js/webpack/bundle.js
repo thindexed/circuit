@@ -2173,6 +2173,2029 @@ module.exports = {
 
 /***/ }),
 
+/***/ "../common/js/AppSwitch.js":
+/*!*********************************!*\
+  !*** ../common/js/AppSwitch.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AppSwitch)
+/* harmony export */ });
+/* harmony import */ var _DesignerDialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DesignerDialog */ "../common/js/DesignerDialog.js");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var AppSwitch = /*#__PURE__*/_createClass(function AppSwitch(permissions, conf) {
+  _classCallCheck(this, AppSwitch);
+
+  var appSwitchButtons = $(" \n            <label class=\"dropdown\" >\n\n                <span class=\"image-button\"  data-toggle=\"dropdown\">\n                  <img  src=\"../_common/images/toolbar_app_switch.svg\"/>\n                </span>\n\n                <ul class=\"dropdown-menu\" role=\"menu\" >\n                    <form class=\"form-horizontal\" role=\"form\">\n\n                      <label class=\"applicationSwitchHome image-button\">\n                        <img src=\"../_common/images/app_home.svg\"/>\n                        <div>Information<br>&nbsp;</div>\n                      </label>\n\n                      <label class=\"applicationSwitchSimulator image-button\">\n                        <img src=\"../_common/images/app_simulator.svg\"/>\n                        <div>Circuit<br>Simulator</div>\n                      </label>\n\n                      <label class=\"applicationSwitchAuthor image-button\" >\n                        <img src=\"../_common/images/app_lessons.svg\"/>\n                        <div>Lesson<br>Author</div>\n                      </label>\n\n                      <label class=\"applicationSwitchDesigner image-button\" >\n                        <img src=\"../_common/images/app_designer.svg\"/>\n                        <div>Shape<br>Designer</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchUser image-button\" >\n                        <img src=\"../_common/images/app_user.svg\"/>\n                        <div>User<br>Management</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchGroups image-button\" >\n                        <img src=\"../_common/images/app_groups.svg\"/>\n                        <div>My Groups<br>&nbsp;</div>\n                      </label>\n                      \n                    </form>\n                </ul>   \n                         \n         </span>\n    ");
+  $(".applicationSwitch").prepend(appSwitchButtons);
+  $(".applicationSwitchDesigner").off("click").on("click", function () {
+    _DesignerDialog__WEBPACK_IMPORTED_MODULE_0__["default"].show(conf);
+  });
+  $(".applicationSwitchAuthor").off("click").on("click", function () {
+    window.open("../author", "author");
+  });
+  $(".applicationSwitchSimulator").off("click").on("click", function () {
+    window.open("../circuit", "circuit");
+  });
+  $(".applicationSwitchHome").off("click").on("click", function () {
+    window.open("../home", "home");
+  });
+
+  if (permissions.featureset.usermanagement === true) {
+    $(document).on("click", ".applicationSwitchUser", function () {
+      window.open("../user", "user");
+    });
+  } else {
+    $(".applicationSwitchUser").remove();
+  }
+
+  if (permissions.featureset.records === true) {
+    $(document).on("click", ".applicationSwitchGroups", function () {
+      window.open("../groups", "groups");
+    });
+  } else {
+    $(".applicationSwitchGroups").remove();
+  }
+});
+
+
+
+/***/ }),
+
+/***/ "../common/js/AuthorPage.js":
+/*!**********************************!*\
+  !*** ../common/js/AuthorPage.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AuthorPage)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var md = __webpack_require__(/*! markdown-it */ "./node_modules/markdown-it/index.js")();
+
+md.use(__webpack_require__(/*! markdown-it-asciimath */ "./node_modules/markdown-it-asciimath/index.js"));
+
+var AuthorPage = /*#__PURE__*/function () {
+  function AuthorPage(containerId, file, token) {
+    _classCallCheck(this, AuthorPage);
+
+    this.file = file;
+    this.containerId = containerId;
+    this.token = token;
+  }
+
+  _createClass(AuthorPage, [{
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var additionalParam = "";
+
+      if (this.token) {
+        additionalParam = "&token=" + this.token;
+      }
+
+      axios.get("../api/global/sheet/get?filePath=".concat(this.file).concat(additionalParam)).then(function (response) {
+        $(_this.containerId).html("");
+        var pages = response.data.pages;
+        pages.forEach(function (page, index) {
+          var container = $("<div class='authorPage'></div>");
+          $(_this.containerId).append(container);
+          var sections = page.sections;
+          sections.forEach(function (section) {
+            switch (section.type) {
+              case "brain":
+                _this.renderBrain(container, section);
+
+                break;
+
+              case "markdown":
+                _this.renderMarkdown(container, section);
+
+                break;
+
+              default:
+                break;
+            }
+          });
+          if (index < pages.length - 1) container.append("<div style='page-break-before: always;'></div>");
+        });
+      });
+    }
+  }, {
+    key: "renderMarkdown",
+    value: function renderMarkdown(container, section) {
+      var markdown = md.render(section.content);
+      container.append("<div class=\"markdownRendering\">".concat(markdown, "</div>"));
+    }
+  }, {
+    key: "renderBrain",
+    value: function renderBrain(container, section) {
+      container.append("<div class=\"imageRendering\"><img src=\"".concat(section.content.image, "\"></div>"));
+    }
+  }]);
+
+  return AuthorPage;
+}();
+
+
+
+/***/ }),
+
+/***/ "../common/js/BackendStorage.js":
+/*!**************************************!*\
+  !*** ../common/js/BackendStorage.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+var BackendStorage = /*#__PURE__*/function () {
+  /**
+   * @constructor
+   *
+   */
+  function BackendStorage(conf) {
+    _classCallCheck(this, BackendStorage);
+
+    this.conf = conf;
+  }
+
+  _createClass(BackendStorage, [{
+    key: "getFiles",
+    value: function getFiles(path, scope) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.conf.backend[scope].list(path)).then(function (response) {
+        // happens in "serverless" mode on the gh-pages/docs installation
+        //
+        var files = [];
+        if (typeof response === "string") files = JSON.parse(response).data.files;else files = response.data.files; // sort the result
+        // Directories are always on top
+        //
+
+        files.sort(function (a, b) {
+          if (a.type === b.type) {
+            if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+            return 0;
+          }
+
+          if (a.type === "dir") {
+            return -1;
+          }
+
+          return 1;
+        });
+        return files;
+      });
+    }
+  }, {
+    key: "saveFile",
+    value: function saveFile(json, fileName, scope) {
+      var data = {
+        filePath: fileName,
+        content: JSON.stringify(json, undefined, 2)
+      };
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.conf.backend[scope].save, data);
+    }
+  }, {
+    key: "deleteFile",
+    value: function deleteFile(fileName, scope) {
+      var data = {
+        filePath: fileName
+      };
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.conf.backend[scope]["delete"], data);
+    }
+  }, {
+    key: "createFolder",
+    value: function createFolder(folderName, scope) {
+      var data = {
+        filePath: folderName
+      };
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.conf.backend[scope].folder, data);
+    }
+  }, {
+    key: "loadUrl",
+    value: function loadUrl(url) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().get(url).then(function (response) {
+        // happens in "serverless" mode on the gh-pages/docs installation
+        //
+        if (typeof response === "string") return JSON.parse(response).data;
+        return response.data;
+      });
+    }
+  }, {
+    key: "sanitize",
+    value: function sanitize(file) {
+      var sanitize = __webpack_require__(/*! sanitize-filename */ "./node_modules/sanitize-filename/index.js");
+
+      file = sanitize(file, "_");
+      file = file.replace(this.conf.fileSuffix, ""); // I don't like dots in the name to
+
+      file = file.replace(RegExp("[.]", "g"), "_");
+      return file;
+    }
+  }]);
+
+  return BackendStorage;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (conf) {
+  return new BackendStorage(conf);
+});
+
+/***/ }),
+
+/***/ "../common/js/Colors.js":
+/*!******************************!*\
+  !*** ../common/js/Colors.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  high: "#C21B7A",
+  low: "#0078F2"
+});
+
+/***/ }),
+
+/***/ "../common/js/DecoratedInputPort.js":
+/*!******************************************!*\
+  !*** ../common/js/DecoratedInputPort.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MarkerFigure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkerFigure */ "../common/js/MarkerFigure.js");
+
+
+var locator = __webpack_require__(/*! ./PortDecorationCenterLocator */ "../common/js/PortDecorationCenterLocator.js");
+
+var growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy();
+growPolicy.growFactor = 1.5;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.InputPort.extend({
+  NAME: "DecoratedInputPort",
+  init: function init(attr, setter, getter) {
+    var _this = this;
+
+    this.hasChanged = false;
+
+    this._super($.extend(attr, {
+      coronaWidth: 2
+    }), setter, getter);
+
+    this.decoration = new _MarkerFigure__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.add(this.decoration, new draw2d.layout.locator.LeftLocator({
+      margin: 8
+    }));
+    this.on("disconnect", function (emitter, event) {
+      _this.decoration.setVisible(_this.getConnections().getSize() === 0); // default value of a not connected port is always HIGH
+      //
+
+
+      if (_this.getConnections().getSize() === 0) {
+        _this.setValue(true);
+      }
+    });
+    this.on("connect", function (emitter, event) {
+      _this.decoration.setVisible(false);
+    });
+    this.on("dragend", function (emitter, event) {
+      _this.decoration.setVisible(_this.getConnections().getSize() === 0);
+    });
+    this.on("drag", function (emitter, event) {
+      _this.decoration.setVisible(false);
+    }); // a port can have a value. Useful for workflow engines or circuit diagrams
+
+    this.setValue(true);
+    this.hasChanged = false;
+    this.installEditPolicy(growPolicy);
+    var circle = new draw2d.shape.basic.Circle({
+      radius: 2,
+      stroke: 0,
+      bgColor: "#909090"
+    });
+
+    circle.hitTest = function () {
+      return false;
+    };
+
+    this.add(circle, locator);
+  },
+  useDefaultValue: function useDefaultValue() {
+    this.decoration.setStick(true);
+  },
+  setValue: function setValue() {
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.0;
+
+    // convert boolean values to 5volt TTL pegel logic
+    //
+    if (typeof value === "boolean") {
+      value = value ? 5.0 : 0.0;
+    }
+
+    this.hasChanged = this.value !== value;
+
+    this._super(value);
+  },
+  hasChangedValue: function hasChangedValue() {
+    return this.hasChanged;
+  },
+  hasRisingEdge: function hasRisingEdge() {
+    return this.hasChangedValue() && this.getValue();
+  },
+  hasFallingEdge: function hasFallingEdge() {
+    return this.hasChangedValue() && !this.getValue();
+  },
+
+  /**
+   * Converts power values (0-5 volt) to boolean logic (TRUE/FALSE)
+   * v <= 1.5volt  => FALSE
+   * v >  1.5volt  => TRUE
+   *
+   * normally v must be greater to 2.2v to be HIGH. But the software can'T handle undefined values right now.
+   */
+  getBooleanValue: function getBooleanValue() {
+    return this.getValue() > 1.5;
+  },
+
+  /**
+   *
+   * Set Canvas must be overridden because all "children" must be painted BEHIND the main figures.
+   * This behaviour is different to the base implementation.
+   *
+   * If the port fades out - the little circle stays visible. This is the wanted effect.
+   *
+   * @param {draw2d.Canvas} canvas the new parent of the figure or null
+   */
+  setCanvas: function setCanvas(canvas) {
+    // remove the shape if we reset the canvas and the element
+    // was already drawn
+    if (canvas === null && this.shape !== null) {
+      if (this.isSelected()) {
+        this.unselect();
+      }
+
+      this.shape.remove();
+      this.shape = null;
+    }
+
+    this.children.each(function (i, e) {
+      e.figure.setCanvas(canvas);
+    });
+    this.canvas = canvas;
+
+    if (this.canvas !== null) {
+      this.getShapeElement();
+    } // reset the attribute cache. We must start by paint all attributes
+    //
+
+
+    this.lastAppliedAttributes = {};
+
+    if (canvas === null) {
+      this.stopTimer();
+    } else {
+      if (this.timerInterval >= this.MIN_TIMER_INTERVAL) {
+        this.startTimer(this.timerInterval);
+      }
+    }
+
+    return this;
+  }
+}));
+
+/***/ }),
+
+/***/ "../common/js/DecoratedOutputPort.js":
+/*!*******************************************!*\
+  !*** ../common/js/DecoratedOutputPort.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var locator = __webpack_require__(/*! ./PortDecorationCenterLocator */ "../common/js/PortDecorationCenterLocator.js");
+
+var growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy();
+growPolicy.growFactor = 1.5;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.OutputPort.extend({
+  NAME: "DecoratedOutputPort",
+  init: function init(attr, setter, getter) {
+    this._super($.extend(attr, {
+      coronaWidth: 2
+    }), setter, getter);
+
+    this.installEditPolicy(growPolicy);
+    var circle = new draw2d.shape.basic.Circle({
+      radius: 2,
+      stroke: 0,
+      bgColor: "#909090"
+    });
+
+    circle.hitTest = function () {
+      return false;
+    };
+
+    this.add(circle, locator);
+    this.setValue(0.0);
+  },
+
+  /**
+   * Converts power values (0-5 volt) to boolean logic (TRUE/FALSE)
+   * v <= 1.5volt  => FALSE
+   * v >  1.5volt  => TRUE
+   *
+   * normally v must be greater to 2.2v to be HIGH. But the software can'T handle undefined values right now.
+   */
+  getBooleanValue: function getBooleanValue() {
+    return this.getValue() > 1.5;
+  },
+
+  /**
+   *
+   * Set Canvas must be overridden because all "children" must be painted BEHIND the main figures.
+   * This behaviour is different to the base implementation.
+   *
+   * If the port fades out - the little circle stays visible. This is the wanted effect.
+   *
+   * @param {draw2d.Canvas} canvas the new parent of the figure or null
+   */
+  setCanvas: function setCanvas(canvas) {
+    // remove the shape if we reset the canvas and the element
+    // was already drawn
+    if (canvas === null && this.shape !== null) {
+      if (this.isSelected()) {
+        this.unselect();
+      }
+
+      this.shape.remove();
+      this.shape = null;
+    } // child must be init BEFORE the main shape. Now the child is behind the main shape and
+    // this is exact the behaviour we want.
+    //
+
+
+    this.children.each(function (i, e) {
+      e.figure.setCanvas(canvas);
+    });
+    this.canvas = canvas;
+
+    if (this.canvas !== null) {
+      this.getShapeElement();
+    } // reset the attribute cache. We must start by paint all attributes
+    //
+
+
+    this.lastAppliedAttributes = {};
+
+    if (canvas === null) {
+      this.stopTimer();
+    } else {
+      if (this.timerInterval >= this.MIN_TIMER_INTERVAL) {
+        this.startTimer(this.timerInterval);
+      }
+    }
+
+    return this;
+  }
+}));
+
+/***/ }),
+
+/***/ "../common/js/DesignerDialog.js":
+/*!**************************************!*\
+  !*** ../common/js/DesignerDialog.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var google_code_prettify_bin_prettify_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! google-code-prettify/bin/prettify.min.css */ "./node_modules/google-code-prettify/bin/prettify.min.css");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+var Dialog = /*#__PURE__*/function () {
+  function Dialog() {
+    _classCallCheck(this, Dialog);
+  }
+
+  _createClass(Dialog, [{
+    key: "show",
+    value: function show(conf, figure) {
+      if (figure) {
+        var baseName = figure.attr("userData.file").replace(/\.shape$/, "");
+        var pathToDesign = "../designer" + "?timestamp=" + new Date().getTime() + "&global=" + baseName + ".shape";
+        window.open(pathToDesign, "designer");
+      } else {
+        var _pathToDesign = "../designer";
+        window.open(_pathToDesign, "designer");
+      }
+    }
+  }]);
+
+  return Dialog;
+}();
+
+var dialog = new Dialog();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dialog);
+
+/***/ }),
+
+/***/ "../common/js/FilesScreen.js":
+/*!***********************************!*\
+  !*** ../common/js/FilesScreen.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Files)
+/* harmony export */ });
+/* harmony import */ var hogan_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hogan.js */ "./node_modules/hogan.js/lib/hogan.js");
+/* harmony import */ var hogan_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hogan_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _PopConfirm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PopConfirm */ "../common/js/PopConfirm.js");
+/* harmony import */ var _PopConfirm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_PopConfirm__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! path */ "./node_modules/path/path.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_3__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+
+
+
+var inputPrompt = __webpack_require__(/*! ./InputPrompt */ "../common/js/InputPrompt.js");
+
+var Files = /*#__PURE__*/function () {
+  /**
+   * @constructor
+   *
+   * @param {String} canvasId the id of the DOM element to use as paint container
+   */
+  function Files(app, conf, permissions) {
+    _classCallCheck(this, Files);
+
+    $("#files_tab a").on("click", this.onShow);
+    $("body").append(" \n        <script id=\"filesTemplate\" type=\"text/x-jsrender\">\n        <div class=\"fileOperations\">\n            <div data-folder=\"{{folder}}\" class='fileOperationsFolderAdd   fa fa-plus' > Folder</div>\n            <div data-folder=\"{{folder}}\" class='fileOperationsDocumentAdd fa fa-plus' > Document</div>\n        </div>\n        <div>Folder: {{folder}}</div>\n        <ul class=\"list-group col-lg-10 col-md-10 col-xs-10 \">\n        {{#files}}\n          <li class=\"list-group-item\"  \n                  data-scope=\"{{scope}}\"  \n                  data-type=\"{{type}}\"  \n                  data-delete=\"{{delete}}\" \n                  data-update=\"{{update}}\" \n                  data-folder=\"{{folder}}\" \n                  data-title=\"{{title}}\" \n                  data-name=\"{{folder}}{{name}}\"\n                  >\n            <div class=\"media thumb\">\n               {{#dir}}\n                  <a class=\"media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\"  src=\"../_common/images/files_folder{{back}}.svg\">\n                  </div>\n                  </a>\n               {{/dir}}\n               {{^dir}}\n                  <a class=\"thumbnail media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\" src=\"{{image}}\">\n                  </div>\n                  </a>\n               {{/dir}}\n              <div class=\"media-body\">\n                <h4 class=\"media-heading\">{{title}}</h4>\n                {{#delete}}\n                    <div class=\"deleteIcon fa fa-trash-o\" data-toggle=\"confirmation\" ></div>\n                {{/delete}}\n              </div>\n            </div>\n          </li>\n        {{/files}}\n        </ul>\n        </script>\n    ");
+    this.conf = conf;
+    this.app = app;
+    this.render(conf, permissions);
+  }
+
+  _createClass(Files, [{
+    key: "onShow",
+    value: function onShow() {
+      if ($("#materialStyle").length) return;
+      setTimeout(function () {
+        var w1 = $("#userFilesTab").outerWidth();
+        var w2 = $("#globalFilesTab").outerWidth();
+        $("<style id='materialStyle'>").prop("type", "text/css").html("\n        #userFilesTab.active ~ span.yellow-bar{\n          left: 0;\n          width: ".concat(w1, "px;\n        }\n        #globalFilesTab.active ~ span.yellow-bar{\n          left: ").concat(w1, "px;\n          width: ").concat(w2, "px;\n        })")).appendTo("head");
+      }, 100);
+    }
+  }, {
+    key: "refresh",
+    value: function refresh(conf, permissions, file) {
+      var directory = path__WEBPACK_IMPORTED_MODULE_3___default().dirname(file.name);
+
+      if (file.scope === "user") {
+        this.initPane("user", "#userFiles", conf.backend.user, permissions, directory);
+      } else {
+        this.initPane("global", "#globalFiles", conf.backend.global, permissions.global, directory);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render(conf, permissions) {
+      var _this2 = this;
+
+      var storage = __webpack_require__(/*! ./BackendStorage */ "../common/js/BackendStorage.js")(conf);
+
+      this.initTabs(permissions);
+      this.initPane("user", "#userFiles", conf.backend.user, permissions, "");
+      this.initPane("global", "#globalFiles", conf.backend.global, permissions.global, "");
+      socket.off("file:generated").on("file:generated", function (msg) {
+        var preview = $(".list-group-item[data-name='" + msg.filePath + "'] img");
+
+        if (preview.length === 0) {
+          _this2.render(conf, permissions);
+        } else {
+          var scope = $(".list-group-item[data-name='" + msg.filePath + "']").data("scope");
+          $(".list-group-item[data-name='" + msg.filePath + "'] img").attr({
+            src: conf.backend[scope].image(msg.filePath) + "&timestamp=" + new Date().getTime()
+          });
+        }
+      });
+      $(document).on("click", "#userFiles .fileOperationsFolderAdd", function (event) {
+        var folder = $(event.target).data("folder") || "";
+        inputPrompt.show("Create Folder", "Folder name", function (value) {
+          storage.createFolder(folder + value, "user");
+
+          _this2.initPane("user", "#userFiles", conf.backend.user, permissions, folder);
+        });
+      }).on("click", "#globalFiles .fileOperationsFolderAdd", function (event) {
+        var folder = $(event.target).data("folder") || "";
+        inputPrompt.show("Create Folder", "Folder name", function (value) {
+          storage.createFolder(folder + value, "global");
+
+          _this2.initPane("global", "#globalFiles", conf.backend.global, permissions.global, folder);
+        });
+      }).on("click", "#userFiles .fileOperationsDocumentAdd", function (event) {
+        var folder = $(event.target).data("folder") || "";
+
+        _this2.app.fileNew(folder + "NewDocument", "user");
+
+        _this2.app.fileSave();
+      }).on("click", "#globalFiles .fileOperationsDocumentAdd", function (event) {
+        var folder = $(event.target).data("folder") || "";
+
+        _this2.app.fileNew(folder + "NewDocument", "global");
+
+        _this2.app.fileSave();
+      });
+    }
+  }, {
+    key: "initTabs",
+    value: function initTabs(permissions) {
+      // user can see private files and the demo files
+      //
+      if (permissions.list === true && permissions.global.list === true) {
+        $('#material-tabs').each(function () {
+          var $active,
+              $content,
+              $links = $(this).find('a');
+          $active = $($links[0]);
+          $active.addClass('active');
+          $content = $($active[0].hash);
+          $links.not($active).each(function () {
+            $(this.hash).hide();
+          });
+          $(this).on('click', 'a', function (e) {
+            $active.removeClass('active');
+            $content.hide();
+            $active = $(this);
+            $content = $(this.hash);
+            $active.addClass('active');
+            $content.show();
+            e.preventDefault();
+          });
+        });
+      } else if (permissions.list === false && permissions.global.list === true) {
+        $('#material-tabs').remove();
+        $("#globalFiles").show();
+        $("#userFiles").remove();
+        $("#files .title span").html("Open a document");
+      } else if (permissions.list === true && permissions.global.list === false) {
+        $('#material-tabs').remove();
+        $("#globalFiles").remove();
+        $("#userFiles").show();
+        $("#files .title span").html("Open a document");
+      } else if (permissions.list === true && permissions.global.list === false) {}
+    }
+  }, {
+    key: "initPane",
+    value: function initPane(scope, paneSelector, backendConf, permissions, initialPath) {
+      var storage = __webpack_require__(/*! ./BackendStorage */ "../common/js/BackendStorage.js")(this.conf);
+
+      if (permissions.list === false) {
+        return;
+      }
+
+      var _this = this; // load demo files
+      //
+
+
+      function loadPane(path) {
+        if (path === "/") path = "";
+        storage.getFiles(path, scope).then(function (files) {
+          files = files.filter(function (file) {
+            return file.name.endsWith(_this.conf.fileSuffix) || file.type === "dir";
+          });
+          files = files.map(function (file) {
+            return _objectSpread(_objectSpread({}, file), {}, {
+              "delete": permissions["delete"],
+              update: permissions.update,
+              scope: scope,
+              title: file.name.replace(_this.conf.fileSuffix, ""),
+              image: backendConf.image(file.filePath)
+            });
+          });
+          console.log(path);
+
+          if (path.length !== 0) {
+            files.unshift({
+              name: path__WEBPACK_IMPORTED_MODULE_3___default().dirname(path),
+              folder: "",
+              // important. Otherwise Hogan makes a lookup fallback to the root element
+              type: "dir",
+              dir: true,
+              "delete": false,
+              update: false,
+              scope: scope,
+              back: "_back",
+              title: ".."
+            });
+          }
+
+          var compiled = hogan_js__WEBPACK_IMPORTED_MODULE_0___default().compile($("#filesTemplate").html());
+          var output = compiled.render({
+            folder: path,
+            files: files
+          });
+          $(paneSelector).html($(output));
+
+          if (permissions.create === false) {
+            $(paneSelector + " .fileOperations").remove();
+          }
+
+          if (permissions["delete"] === true) {
+            $(paneSelector + " .deleteIcon").on("click", function (event) {
+              var $el = $(event.target).closest(".list-group-item");
+              var name = $el.data("name");
+              storage.deleteFile(name, scope).then(function () {
+                var parent = $el.closest(".list-group-item");
+                parent.hide('slow', function () {
+                  return parent.remove();
+                });
+              });
+            });
+            $(paneSelector + " [data-toggle='confirmation']").popConfirm({
+              title: "Delete File?",
+              content: "",
+              placement: "bottom" // (top, right, bottom, left)
+
+            });
+          } // Rename of a file or folder is the very same as delete -> create
+          // I this case the user must have the two permissions to rename a folder or file
+
+
+          if (!_this.serverless && permissions["delete"] === true && permissions.create === true) {
+            $(paneSelector + " .list-group-item h4").off("click").on("click", function (event) {
+              // check if the editor is already visible. We can do on/off of events or do it this way....
+              if ($(".filenameInplaceEdit").length > 0) {
+                $(".filenameInplaceEdit").focus();
+                $("#filenameHelpBlock").html("press ESC if you want abort the rename operation");
+                return;
+              }
+
+              Mousetrap.pause();
+              var $el = $(event.currentTarget);
+              var parent = $el.closest(".list-group-item");
+              var name = parent.data("name");
+              var folder = parent.data("folder");
+              var title = parent.data("title");
+              var type = parent.data("type");
+              var $replaceWith = $("\n                   <input type=\"input\" class=\"filenameInplaceEdit\" value=\"".concat(title, "\" />\n                   <small id=\"filenameHelpBlock\" class=\"form-text text-muted\">\n                       \n                   </small>"));
+              $el.hide();
+              $el.after($replaceWith);
+              $replaceWith.focus();
+              $replaceWith.on("click", function () {
+                return false;
+              }); // Rename the file on the Server
+              //
+
+              function fire() {
+                Mousetrap.unpause();
+                var newName = $replaceWith.val();
+
+                if (newName !== "") {
+                  if (type !== "dir") {
+                    newName = storage.sanitize(newName) + conf.fileSuffix;
+                  } // nothing to do
+
+
+                  if (newName === title) {
+                    $replaceWith.remove();
+                    $el.show();
+                    return;
+                  }
+
+                  newName = folder + newName;
+                  axios__WEBPACK_IMPORTED_MODULE_1___default().post(conf.backend[scope].rename, {
+                    from: name,
+                    to: newName
+                  }).then(function (response) {
+                    var resTitle = response.data.name.replace(_this.conf.fileSuffix, "");
+                    var resName = response.data.name;
+                    $replaceWith.remove();
+                    $el.html(resName);
+                    $el.show();
+                    parent.data("title", resTitle);
+                    parent.data("name", resName);
+                  })["catch"](function () {
+                    $("#filenameHelpBlock").html("invalid file name");
+                  });
+                } else {
+                  // get the value and post them here
+                  $replaceWith.remove();
+                  $el.show();
+                }
+              } // Cancel the rename operation
+              //
+
+
+              function cancel() {
+                $replaceWith.remove();
+                $el.show();
+              }
+
+              $replaceWith.on("keydown", function (e) {
+                switch (e.which) {
+                  case 13:
+                    fire();
+                    break;
+
+                  case 27:
+                    cancel();
+                    break;
+                }
+              });
+              event.preventDefault();
+              event.stopPropagation();
+              return false;
+            });
+          }
+
+          $(paneSelector + " .list-group-item[data-type='dir']").on("click", function (event) {
+            // check if the editor is already visible. We can do on/off of events or do it this way....
+            if ($(".filenameInplaceEdit").length > 0) {
+              $(".filenameInplaceEdit").focus();
+              $("#filenameHelpBlock").html("press ESC if you want abort the rename operation");
+              return;
+            }
+
+            var $el = $(event.currentTarget);
+            var name = $el.data("name");
+
+            if (name !== "" && !name.endsWith("/")) {
+              name = name + "/";
+            }
+
+            loadPane(name);
+          });
+          $(paneSelector + " .list-group-item[data-type='file']").on("click", function (event) {
+            // check if the editor is already visible. We can do on/off of events or do it this way....
+            if ($(".filenameInplaceEdit").length > 0) {
+              $(".filenameInplaceEdit").focus();
+              $("#filenameHelpBlock").html("press ESC if you want abort the rename operation");
+              return;
+            }
+
+            var $el = $(event.currentTarget);
+            var name = $el.data("name");
+            $el.addClass("spinner");
+            app.load(name, scope).then(function () {
+              $el.removeClass("spinner");
+              history.pushState({
+                id: 'editor',
+                scope: scope,
+                file: name
+              }, _this.conf.appName + ' | ' + name, window.location.href.split('?')[0] + '?' + scope + '=' + name);
+            });
+          });
+        });
+      }
+
+      loadPane(initialPath);
+    }
+  }]);
+
+  return Files;
+}();
+
+
+
+/***/ }),
+
+/***/ "../common/js/InputPrompt.js":
+/*!***********************************!*\
+  !*** ../common/js/InputPrompt.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Dialog = /*#__PURE__*/function () {
+  /**
+   * @constructor
+   *
+   */
+  function Dialog() {
+    _classCallCheck(this, Dialog);
+
+    $("body").append("\n            <div id=\"inputPromptDialog\" class=\"modal fade genericDialog\" tabindex=\"-1\">\n            <div class=\"modal-dialog \">\n              <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                  <h4 class=\"media-heading\">Input Prompt</h4>\n                </div>\n                <div class=\"modal-body\">\n                  <div class=\"media\">\n                    <fieldset>\n                      <div class=\"form-group\">\n                        <div class=\"col-lg-12\">\n                          <div class=\"promptValueLabel\">Value:</div>\n                          <input type=\"text\" class=\"form-control floating-label inputPromptValue\" value=\"\" >\n                        </div>\n                      </div>\n                    </fieldset>\n                  </div>\n                </div>\n                <div class=\"modal-footer\">\n                  <button class=\"btn\" data-dismiss=\"modal\">Cancel</button>\n                  <button class=\"btn btn-primary okButton\">Create</button>\n                </div>\n              </div>\n            </div>\n          </div>\n    ");
+  }
+  /**
+   */
+
+
+  _createClass(Dialog, [{
+    key: "show",
+    value: function show(title, label, defaultValue, callback) {
+      if (typeof defaultValue === "function") {
+        callback = defaultValue;
+        defaultValue = "";
+      }
+
+      $("#inputPromptDialog .media-heading").html(title);
+      $("#inputPromptDialog .promptValueLabel").html(label);
+      $('#inputPromptDialog .inputPromptValue').val(defaultValue);
+      $('#inputPromptDialog').on('shown.bs.modal', function (event) {
+        $(event.currentTarget).find('input:first').focus();
+      });
+      $("#inputPromptDialog").modal("show");
+      Mousetrap.pause();
+      $('#inputPromptDialog .inputPromptValue').on('keypress', function (e) {
+        var key = e.charCode || e.keyCode || 0;
+
+        if (key === 13) {
+          $("#inputPromptDialog .okButton").click();
+        }
+      }); // Save Button
+      //
+
+      $("#inputPromptDialog .okButton").off('click').on("click", function () {
+        Mousetrap.unpause();
+        $('#inputPromptDialog').modal('hide');
+        var value = $("#inputPromptDialog .inputPromptValue").val();
+        callback(value);
+      });
+    }
+  }]);
+
+  return Dialog;
+}();
+
+var dialog = new Dialog();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dialog);
+
+/***/ }),
+
+/***/ "../common/js/LinkShareDialog.js":
+/*!***************************************!*\
+  !*** ../common/js/LinkShareDialog.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _toast__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toast */ "../common/js/toast.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+var Dialog = /*#__PURE__*/function () {
+  /**
+   * @constructor
+   *
+   */
+  function Dialog() {
+    _classCallCheck(this, Dialog);
+
+    $("body").append("\n            <div id=\"linkShareDialog\" class=\"modal fade genericDialog\" tabindex=\"-1\">\n            <div class=\"modal-dialog \">\n              <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                  <h4 class=\"media-heading\">Share with Others</h4>\n                </div>\n                <div class=\"modal-body\">\n                  <div class=\"media\">\n                    <div class=\"promptValueLabel\">Public Link:</div>\n                    <fieldset>\n                      <div class=\"form-group\">\n                        <div class=\"col-lg-12\">\n                          <input id=\"sharedLinkInput\" type=\"text\" class=\"form-control floating-label\" value=\"\" > <button class=\"clipboardButton\" style=\"float:right\">copy</button>\n                        </div>\n                      </div>\n                    </fieldset>\n                  </div>\n                </div>\n                <div class=\"modal-footer\">\n                  <button class=\"btn\" data-dismiss=\"modal\">Close</button>\n                </div>\n              </div>\n            </div>\n          </div>\n    ");
+  }
+  /**
+   */
+
+
+  _createClass(Dialog, [{
+    key: "show",
+    value: function show(file) {
+      var url = window.location.href.split('?')[0] + '?shared=' + file;
+      $("#sharedLinkInput").val(url);
+      $('#linkShareDialog').on('shown.bs.modal', function (event) {
+        $(event.currentTarget).find('input:first').focus();
+      });
+      $("#linkShareDialog").modal("show");
+      $("#linkShareDialog .clipboardButton").on("click", function () {
+        var copyText = document.getElementById("sharedLinkInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        $('#linkShareDialog').modal('hide');
+        (0,_toast__WEBPACK_IMPORTED_MODULE_0__["default"])("Link copied");
+      });
+    }
+  }]);
+
+  return Dialog;
+}();
+
+var dialog = new Dialog();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dialog);
+
+/***/ }),
+
+/***/ "../common/js/MarkerFigure.js":
+/*!************************************!*\
+  !*** ../common/js/MarkerFigure.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MarkerStateAFigure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkerStateAFigure */ "../common/js/MarkerStateAFigure.js");
+/* harmony import */ var _MarkerStateBFigure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MarkerStateBFigure */ "../common/js/MarkerStateBFigure.js");
+/* harmony import */ var _Colors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Colors */ "../common/js/Colors.js");
+/**
+ * The markerFigure is the left hand side annotation for a DecoratedPort.
+ *
+ * It contains two children
+ *
+ * StateAFigure: if the mouse hover and the figure isn't permanent visible
+ * StateBFigure: either the mouse is over or the user pressed the checkbox to stick the figure on the port
+ *
+ * This kind of decoration is usefull for defualt values on workflwos enginges or circuit diagrams
+ *
+ */
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.shape.layout.VerticalLayout.extend({
+  NAME: "MarkerFigure",
+  init: function init(attr, setter, getter) {
+    var _this = this;
+
+    this.isMouseOver = false; // indicator if the mouse is over the element
+
+    this.stick = false; // indicator if the stateBFigure should always be visible
+
+    this.defaultValue = true; // current selected default value for the decoration
+
+    this._super($.extend({
+      stroke: 0
+    }, attr), setter, getter); // figure if the decoration is not permanent visible (sticky note)
+
+
+    this.add(this.stateA = new _MarkerStateAFigure__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      text: "X"
+    })); // figure if the decoration permanent visible
+
+    this.add(this.stateB = new _MarkerStateBFigure__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      text: "X"
+    }));
+    this.on("mouseenter", function (emitter, event) {
+      _this.onMouseOver(true);
+    });
+    this.on("mouseleave", function (emitter, event) {
+      _this.onMouseOver(false);
+    });
+    this.on("click", function (emitter, event) {
+      if (_this.isVisible() === false) {
+        return; //silently
+      }
+
+      if (_this.stateB.getStickTickFigure().getBoundingBox().hitTest(event.x, event.y) === true) {
+        _this.setStick(!_this.getStick());
+      } else if (_this.stateB.getLabelFigure().getBoundingBox().hitTest(event.x, event.y) === true) {
+        $.contextMenu({
+          selector: 'body',
+          trigger: "left",
+          events: {
+            hide: function hide() {
+              $.contextMenu('destroy');
+            }
+          },
+          callback: $.proxy(function (key, options) {
+            // propagate the default value to the port
+            //
+            switch (key) {
+              case "high":
+                _this.setDefaultValue(true);
+
+                _this.setStick(true);
+
+                break;
+
+              case "low":
+                _this.setDefaultValue(false);
+
+                _this.setStick(true);
+
+                break;
+
+              default:
+                break;
+            }
+          }, this),
+          x: event.x,
+          y: event.y,
+          items: {
+            "high": {
+              name: "High"
+            },
+            "low": {
+              name: "Low"
+            }
+          }
+        });
+      }
+    });
+    this.setDefaultValue(true);
+    this.onMouseOver(false);
+  },
+  onMouseOver: function onMouseOver(flag) {
+    this.isMouseOver = flag;
+
+    if (this.visible === false) {
+      return; // silently
+    }
+
+    if (this.stick === true) {
+      this.stateA.setVisible(false);
+      this.stateB.setVisible(true);
+    } else {
+      this.stateA.setVisible(!this.isMouseOver);
+      this.stateB.setVisible(this.isMouseOver);
+    }
+
+    return this;
+  },
+  setVisible: function setVisible(flag) {
+    this._super(flag); // update the hover/stick state of the figure
+
+
+    this.onMouseOver(this.isMouseOver);
+    return this;
+  },
+  setStick: function setStick(flag) {
+    this.stick = flag;
+    this.onMouseOver(this.isMouseOver); // the port has only a default value if the decoration is visible
+
+    this.parent.setValue(flag ? this.defaultValue : null);
+    this.stateB.setTick(this.getStick());
+    return this;
+  },
+  getStick: function getStick() {
+    return this.stick;
+  },
+  setText: function setText(text) {
+    this.stateB.setText(text);
+    return this;
+  },
+  setDefaultValue: function setDefaultValue(value) {
+    this.defaultValue = value;
+    this.setText(this.defaultValue === true ? "High" : "Low ");
+    this.stateB.setTintColor(this.defaultValue === true ? _Colors__WEBPACK_IMPORTED_MODULE_2__["default"].high : _Colors__WEBPACK_IMPORTED_MODULE_2__["default"].low); // only propagate the value to the parent if the decoration permanent visible
+    //
+
+    if (this.stick === true) {
+      this.parent.setValue(this.defaultValue);
+    }
+  }
+}));
+
+/***/ }),
+
+/***/ "../common/js/MarkerStateAFigure.js":
+/*!******************************************!*\
+  !*** ../common/js/MarkerStateAFigure.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * This is only the mouseover reactive shape. A little bit smaller than the visible shape
+ *
+ * Or you can display this shape with opacity of 0.2 to indicate that this is a reactive area.
+ */
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.shape.basic.Label.extend({
+  NAME: "MarkerStateAFigure",
+
+  /**
+   * @param attr
+   */
+  init: function init(attr, setter, getter) {
+    this._super($.extend({
+      padding: {
+        left: 5,
+        top: 2,
+        bottom: 2,
+        right: 10
+      },
+      bgColor: null,
+      stroke: 1,
+      color: null,
+      fontColor: null,
+      fontSize: 8
+    }, attr), setter, getter); // we must override the hitTest method to ensure that the parent can receive the mouseenter/mouseleave events.
+    // Unfortunately draw2D didn't provide event bubbling like HTML. The first shape in queue consumes the event.
+    //
+    // now this shape is "dead" for any mouse events and the parent must/can handle this.
+
+
+    this.hitTest = function () {
+      return false;
+    };
+  }
+}));
+
+/***/ }),
+
+/***/ "../common/js/MarkerStateBFigure.js":
+/*!******************************************!*\
+  !*** ../common/js/MarkerStateBFigure.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Colors */ "../common/js/Colors.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.shape.layout.HorizontalLayout.extend({
+  NAME: "MarkerStateBFigure",
+
+  /**
+   * @param attr
+   */
+  init: function init(attr, setter, getter) {
+    this.tintColor = _Colors__WEBPACK_IMPORTED_MODULE_0__["default"].low;
+
+    this._super($.extend({
+      bgColor: "#FFFFFF",
+      stroke: 1,
+      color: _Colors__WEBPACK_IMPORTED_MODULE_0__["default"].low,
+      radius: 2,
+      padding: {
+        left: 3,
+        top: 2,
+        bottom: 0,
+        right: 8
+      },
+      gap: 5
+    }, attr), setter, getter);
+
+    this.stickTick = new draw2d.shape.basic.Circle({
+      diameter: 8,
+      bgColor: "#f0f0f0",
+      stroke: 1,
+      resizeable: false
+    });
+    this.add(this.stickTick);
+
+    this.stickTick.hitTest = function () {
+      return false;
+    };
+
+    this.stickTick.addCssClass("highlightOnHover");
+    this.label = new draw2d.shape.basic.Label({
+      text: attr ? attr.text : "X",
+      resizeable: false,
+      stroke: 0,
+      padding: 0,
+      fontSize: 8,
+      fontColor: "#303030"
+    });
+    this.add(this.label);
+
+    this.label.hitTest = function () {
+      return false;
+    };
+
+    this.label.addCssClass("highlightOnHover"); // we must override the hitTest method to ensure that the parent can receive the mouseenter/mouseleave events.
+    // Unfortunately draw2D didn't provide event bubbling like HTML. The first shape in queue consumes the event.
+    //
+    // now this shape is "dead" for any mouse events and the parent must/can handle this.
+
+    this.hitTest = function () {
+      return false;
+    };
+  },
+  setText: function setText(text) {
+    this.label.setText(text);
+  },
+  setTintColor: function setTintColor(color) {
+    this.tintColor = color;
+    this.attr({
+      color: color
+    });
+    this.label.attr({
+      fontColor: color
+    });
+  },
+  setTick: function setTick(flag) {
+    this.stickTick.attr({
+      bgColor: flag ? this.tintColor : "#f0f0f0"
+    });
+  },
+  getStickTickFigure: function getStickTickFigure() {
+    return this.stickTick;
+  },
+  getLabelFigure: function getLabelFigure() {
+    return this.label;
+  },
+
+  /**
+   * @method
+   *
+   *
+   * @template
+   **/
+  repaint: function repaint(attributes) {
+    if (this.repaintBlocked === true || this.shape === null) {
+      return;
+    }
+
+    attributes = attributes || {};
+    attributes.path = this.calculatePath();
+
+    this._super(attributes);
+  },
+
+  /**
+   * @method
+   *
+   * Override the default rendering of the HorizontalLayout, which is a simple
+   * rectangle. We want an arrow.
+   */
+  createShapeElement: function createShapeElement() {
+    return this.canvas.paper.path(this.calculatePath());
+  },
+
+  /**
+   * stupid copy&paste the code from the Polygon shape...unfortunately the LayoutFigure isn't a polygon.
+   *
+   * @returns {string}
+   */
+  calculatePath: function calculatePath() {
+    var arrowLength = 8;
+    this.vertices = new draw2d.util.ArrayList();
+    var w = this.width;
+    var h = this.height;
+    var pos = this.getAbsolutePosition();
+    var i = 0;
+    var length = 0;
+    this.vertices.add(new draw2d.geo.Point(pos.x, pos.y));
+    this.vertices.add(new draw2d.geo.Point(pos.x + w - arrowLength, pos.y));
+    this.vertices.add(new draw2d.geo.Point(pos.x + w, pos.y + h / 2));
+    this.vertices.add(new draw2d.geo.Point(pos.x + w - arrowLength, pos.y + h));
+    this.vertices.add(new draw2d.geo.Point(pos.x, pos.y + h));
+    var radius = this.getRadius();
+    var path = []; // hard corners
+    //
+
+    if (radius === 0) {
+      length = this.vertices.getSize();
+      var p = this.vertices.get(0);
+      path.push("M", p.x, " ", p.y);
+
+      for (i = 1; i < length; i++) {
+        p = this.vertices.get(i);
+        path.push("L", p.x, " ", p.y);
+      }
+
+      path.push("Z");
+    } // soften/round corners
+    //
+    else {
+      length = this.vertices.getSize();
+      var start = this.vertices.first();
+      var end = this.vertices.last();
+
+      if (start.equals(end)) {
+        length = length - 1;
+        end = this.vertices.get(length - 1);
+      }
+
+      var begin = draw2d.geo.Util.insetPoint(start, end, radius);
+      path.push("M", begin.x, ",", begin.y);
+
+      for (i = 0; i < length; i++) {
+        start = this.vertices.get(i);
+        end = this.vertices.get((i + 1) % length);
+        var modStart = draw2d.geo.Util.insetPoint(start, end, radius);
+        var modEnd = draw2d.geo.Util.insetPoint(end, start, radius);
+        path.push("Q", start.x, ",", start.y, " ", modStart.x, ", ", modStart.y);
+        path.push("L", modEnd.x, ",", modEnd.y);
+      }
+    }
+
+    return path.join("");
+  }
+}));
+
+/***/ }),
+
+/***/ "../common/js/PopConfirm.js":
+/*!**********************************!*\
+  !*** ../common/js/PopConfirm.js ***!
+  \**********************************/
+/***/ (() => {
+
+$.fn.extend({
+  popConfirm: function popConfirm(options) {
+    var defaults = {
+      title: 'Confirmation',
+      content: 'Are you really sure ?',
+      placement: 'right',
+      container: 'body',
+      yesBtn: 'Yes',
+      noBtn: 'No'
+    },
+        last = null;
+    options = $.extend(defaults, options);
+    return this.each(function () {
+      var self = $(this),
+          arrayActions = [],
+          arrayDelegatedActions = [],
+          eventToConfirm,
+          optName,
+          optValue,
+          i,
+          elmType,
+          code,
+          form; // Load data-* attriutes
+
+      for (optName in options) {
+        if (options.hasOwnProperty(optName)) {
+          optValue = $(this).attr('data-confirm-' + optName);
+
+          if (optValue) {
+            options[optName] = optValue;
+          }
+        }
+      } // If there are jquery click events
+
+
+      if (jQuery._data(this, "events") && jQuery._data(this, "events").click) {
+        // Save all click handlers
+        for (i = 0; i < jQuery._data(this, "events").click.length; i = i + 1) {
+          arrayActions.push(jQuery._data(this, "events").click[i].handler);
+        } // unbind it to prevent it firing
+
+
+        $(self).unbind("click");
+      } // If there are jquery delegated click events
+
+
+      if (self.data('remote') && jQuery._data(document, "events") && jQuery._data(document, "events").click) {
+        // Save all delegated click handlers that apply
+        for (i = 0; i < jQuery._data(document, "events").click.length; i = i + 1) {
+          elmType = self[0].tagName.toLowerCase();
+
+          if (jQuery._data(document, "events").click[i].selector && jQuery._data(document, "events").click[i].selector.indexOf(elmType + "[data-remote]") !== -1) {
+            arrayDelegatedActions.push(jQuery._data(document, "events").click[i].handler);
+          }
+        }
+      } // If there are hard onclick attribute
+
+
+      if (self.attr('onclick')) {
+        // Extracting the onclick code to evaluate and bring it into a closure
+        code = self.attr('onclick');
+        arrayActions.push(function () {
+          eval(code);
+        });
+        $(self).prop("onclick", null);
+      } // If there are href link defined
+
+
+      if (!self.data('remote') && self.attr('href')) {
+        // Assume there is a href attribute to redirect to
+        arrayActions.push(function () {
+          window.location.href = self.attr('href');
+        });
+      } // If the button is a submit one
+
+
+      if (self.attr('type') && self.attr('type') === 'submit') {
+        // Get the form related to this button then store submiting in closure
+        form = $(this).parents('form:first');
+        arrayActions.push(function () {
+          // Add the button name / value if specified
+          if (typeof self.attr('name') !== "undefined") {
+            $('<input type="hidden">').attr('name', self.attr('name')).attr('value', self.attr('value')).appendTo(form);
+          }
+
+          form.submit();
+        });
+      }
+
+      self.popover({
+        trigger: 'manual',
+        title: options.title,
+        html: true,
+        placement: options.placement,
+        container: options.container,
+        //Avoid using multiline strings, no support in older browsers.
+        content: options.content + '<p class="button-group" style="margin-top: 10px; text-align: center;"><button type="button" class="btn btn-small confirm-dialog-btn-abort">' + options.noBtn + '</button> <button type="button" class="btn btn-small btn-danger confirm-dialog-btn-confirm">' + options.yesBtn + '</button></p>'
+      }).click(function (e) {
+        if (last && last !== self) {
+          last.popover('hide').removeClass('popconfirm-active');
+        }
+
+        last = self;
+      });
+      $(document).on('click', function () {
+        if (last) {
+          last.popover('hide').removeClass('popconfirm-active');
+        }
+      });
+      self.bind('click', function (e) {
+        eventToConfirm = e;
+        e.preventDefault();
+        e.stopPropagation();
+        $('.popconfirm-active').not(self).popover('hide').removeClass('popconfirm-active');
+        self.popover('show').addClass('popconfirm-active');
+        $(document).find('.popover .confirm-dialog-btn-confirm').one('click', function (e) {
+          for (i = 0; i < arrayActions.length; i = i + 1) {
+            arrayActions[i].apply(self, [eventToConfirm]);
+          }
+
+          for (i = 0; i < arrayDelegatedActions.length; i = i + 1) {
+            arrayDelegatedActions[i].apply(self, [eventToConfirm.originalEvent]);
+          }
+
+          self.popover('hide').removeClass('popconfirm-active');
+        });
+        $(document).find('.popover .confirm-dialog-btn-abord').bind('click', function (e) {
+          self.popover('hide').removeClass('popconfirm-active');
+        });
+      });
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "../common/js/PortDecorationCenterLocator.js":
+/*!***************************************************!*\
+  !*** ../common/js/PortDecorationCenterLocator.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * @class
+ *
+ * A CenterLocator is used to place figures in the center of a parent shape.
+ *
+ *
+ *
+ * @example
+ *
+ *
+ *    // create a basic figure and add a Label/child via API call
+ *    //
+ *    let circle = new draw2d.shape.basic.Circle({diameter:120});
+ *    circle.setStroke(3);
+ *    circle.setColor("#A63343");
+ *    circle.setBackgroundColor("#E65159");
+ *    circle.add(new draw2d.shape.basic.Label({text:"Center Label"}), new draw2d.layout.locator.CenterLocator());
+ *    canvas.add( circle, 100,50);
+ *
+ *
+ * @author Andreas Herz
+ * @extend draw2d.layout.locator.Locator
+ */
+var Locator = draw2d.layout.locator.Locator.extend(
+/** @lends draw2d.layout.locator.CenterLocator.prototype */
+{
+  NAME: "draw2d.layout.locator.CenterLocator",
+
+  /**
+   * Constructs a locator with associated parent.
+   *
+   */
+  init: function init(attr, setter, getter) {
+    this._super(attr, setter, getter);
+  },
+
+  /**
+   * 
+   * Relocates the given Figure.
+   *
+   * @param {Number} index child index of the target
+   * @param {draw2d.Figure} target The figure to relocate
+   **/
+  relocate: function relocate(index, target) {
+    target.setCenter(0, 0);
+  }
+});
+var locator = new Locator();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (locator);
+
+/***/ }),
+
+/***/ "../common/js/Userinfo.js":
+/*!********************************!*\
+  !*** ../common/js/Userinfo.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Userinfo)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+var Userinfo = /*#__PURE__*/function () {
+  function Userinfo(permissions, conf) {
+    var _this = this;
+
+    _classCallCheck(this, Userinfo);
+
+    if (permissions.featureset.authentication === false) {
+      $(".userinfo_toggler").remove();
+    } else {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("../userinfo").then(function (response) {
+        _this.user = response.data;
+        var icon = _this.user.role === "admin" ? "../_common/images/toolbar_admin.svg" : "../_common/images/toolbar_user.svg";
+        var role = _this.user.role === "admin" ? "(Administrator)" : "";
+        $(".userinfo_toggler img").attr("src", icon);
+        $(".userinfo_toggler .dropdown-menu").html(" \n              <div class=\"userContainer\">\n                <img  src=\"".concat(icon, "\"/>\n                <div>").concat(_this.user.displayName, "</div>\n                <div>").concat(role, "</div>\n                <button class=\"logoutButton\">Logout</button>\n              </div>\n          "));
+        $(".userinfo_toggler .logoutButton").on("click", function () {
+          window.location.replace("../logout?returnTo=" + conf.loginRedirect);
+        });
+      })["catch"](function () {
+        var loginButton = $("<button class='loginButton'>Login</button>");
+        $(".userinfo_toggler").html(loginButton);
+        $(document).on("click", ".loginButton", function () {
+          window.location.replace("../login?returnTo=" + conf.loginRedirect);
+        });
+      });
+    }
+  }
+
+  _createClass(Userinfo, [{
+    key: "getUser",
+    value: function getUser() {
+      return this.user;
+    }
+  }]);
+
+  return Userinfo;
+}();
+
+
+
+/***/ }),
+
+/***/ "../common/js/checkElement.js":
+/*!************************************!*\
+  !*** ../common/js/checkElement.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ checkElement)
+/* harmony export */ });
+function rafAsync() {
+  return new Promise(function (resolve) {
+    requestAnimationFrame(resolve); //faster than set time out
+  });
+}
+
+function checkElement(selector) {
+  if (document.querySelector(selector) === null) {
+    return rafAsync().then(function () {
+      return checkElement(selector);
+    });
+  } else {
+    return Promise.resolve(true);
+  }
+}
+
+/***/ }),
+
+/***/ "../common/js/inlineSVG.js":
+/*!*********************************!*\
+  !*** ../common/js/inlineSVG.js ***!
+  \*********************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+(function (root, factory) {
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+})(typeof __webpack_require__.g !== "undefined" ? __webpack_require__.g : this.window || this.global, function (root) {
+  // Variables
+  var inlineSVG = {},
+      supports = !!document.querySelector && !!root.addEventListener,
+      settings; // Defaults
+
+  var defaults = {
+    initClass: 'js-inlinesvg',
+    svgSelector: 'img.svg'
+  };
+  /**
+   * Stolen from underscore.js
+   * @private
+   * @param {Int} times
+   * @param {Function} func
+   */
+
+  var after = function after(times, func) {
+    return function () {
+      if (--times < 1) {
+        return func.apply(this, arguments);
+      }
+    };
+  };
+  /**
+   * Merge two objects together
+   * @private
+   * @param {Function} fn
+   */
+
+
+  var extend = function extend() {
+    // Variables
+    var extended = {};
+    var deep = false;
+    var i = 0;
+    var length = arguments.length; // Check if a deep merge
+
+    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+      deep = arguments[0];
+      i++;
+    } // Merge the object into the extended object
+
+
+    var merge = function merge(obj) {
+      for (var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+          // If deep merge and property is an object, merge properties
+          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+            extended[prop] = extend(true, extended[prop], obj[prop]);
+          } else {
+            extended[prop] = obj[prop];
+          }
+        }
+      }
+    }; // Loop through each object and conduct a merge
+
+
+    for (; i < length; i++) {
+      var obj = arguments[i];
+      merge(obj);
+    }
+
+    return extended;
+  }; // Methods
+
+  /**
+   * Grab all the SVGs that match the selector
+   * @public
+   */
+
+
+  var getAll = function getAll() {
+    var svgs = document.querySelectorAll(settings.svgSelector);
+    return svgs;
+  };
+  /**
+   * Inline all the SVGs in the array
+   * @public
+   */
+
+
+  var inliner = function inliner(cb) {
+    var svgs = getAll();
+    var callback = after(svgs.length, cb);
+    Array.prototype.forEach.call(svgs, function (svg, i) {
+      // Store some attributes of the image
+      var src = svg.src || svg.getAttribute('data-src'),
+          attributes = svg.attributes; // Get the contents of the SVG
+
+      var request = new XMLHttpRequest();
+      request.open('GET', src, true);
+
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 400) {
+          // Setup a parser to convert the response to text/xml in order for it
+          // to be manipulated and changed
+          var parser = new DOMParser(),
+              result = parser.parseFromString(request.responseText, 'text/xml'),
+              inlinedSVG = result.getElementsByTagName('svg')[0];
+          var titles = inlinedSVG.getElementsByTagName('title');
+
+          while (titles[0]) {
+            titles[0].parentNode.removeChild(titles[0]);
+          }
+
+          var descs = inlinedSVG.getElementsByTagName('desc');
+
+          while (descs[0]) {
+            descs[0].parentNode.removeChild(descs[0]);
+          } // Remove some of the attributes that aren't needed
+
+
+          inlinedSVG.removeAttribute('xmlns:a');
+          inlinedSVG.removeAttribute('width');
+          inlinedSVG.removeAttribute('height');
+          inlinedSVG.removeAttribute('x');
+          inlinedSVG.removeAttribute('y');
+          inlinedSVG.removeAttribute('enable-background');
+          inlinedSVG.removeAttribute('xmlns:xlink');
+          inlinedSVG.removeAttribute('xml:space');
+          inlinedSVG.removeAttribute('version'); // Add in the attributes from the original <img> except `src` or
+          // `alt`, we don't need either
+
+          Array.prototype.slice.call(attributes).forEach(function (attribute) {
+            if (attribute.name !== 'src' && attribute.name !== 'alt') {
+              inlinedSVG.setAttribute(attribute.name, attribute.value);
+            }
+          }); // Add an additional class to the inlined SVG to imply it was
+          // infact inlined, might be useful to know
+
+          if (inlinedSVG.classList) {
+            inlinedSVG.classList.add('inlined-svg');
+          } else {
+            inlinedSVG.className += ' ' + 'inlined-svg';
+          } // Add in some accessibility quick wins
+
+
+          inlinedSVG.setAttribute('role', 'img'); // Use the `longdesc` attribute if one exists
+
+          if (attributes.longdesc) {
+            var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
+                descriptionText = document.createTextNode(attributes.longdesc.value);
+            description.appendChild(descriptionText);
+            inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
+          } // Use the `alt` attribute if one exists
+
+
+          if (attributes.alt) {
+            inlinedSVG.setAttribute('aria-labelledby', 'title');
+            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
+                titleText = document.createTextNode(attributes.alt.value);
+            title.appendChild(titleText);
+            inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
+          } // Replace the image with the SVG
+
+
+          svg.parentNode.replaceChild(inlinedSVG, svg); // Fire the callback
+
+          callback(settings.svgSelector);
+        } else {
+          console.error('There was an error retrieving the source of the SVG.');
+        }
+      };
+
+      request.onerror = function () {
+        console.error('There was an error connecting to the origin server.');
+      };
+
+      request.send();
+    });
+  };
+  /**
+   * Initialise the inliner
+   * @public
+   */
+
+
+  inlineSVG.init = function (options, callback) {
+    // Test for support
+    if (!supports) return; // Merge users option with defaults
+
+    settings = extend(defaults, options || {}); // Kick-off the inliner
+
+    inliner(callback || function () {});
+  };
+
+  return inlineSVG;
+});
+
+/***/ }),
+
+/***/ "../common/js/toast.js":
+/*!*****************************!*\
+  !*** ../common/js/toast.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(text) {
+  $("body").append($("<div id=\"notificationToast\">".concat(text, "</div>")));
+  $("#notificationToast").delay(900).animate({
+    top: "+=20"
+  }, 500).delay(1500).animate({
+    top: "-=20"
+  }, 300, function () {
+    $("#notificationToast").remove();
+  });
+}
+
+/***/ }),
+
 /***/ "./js/Application.js":
 /*!***************************!*\
   !*** ./js/Application.js ***!
@@ -6261,2029 +8284,6 @@ var AddonScreen = /*#__PURE__*/function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "../common/js/AppSwitch.js":
-/*!*********************************!*\
-  !*** ../common/js/AppSwitch.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ AppSwitch)
-/* harmony export */ });
-/* harmony import */ var _DesignerDialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DesignerDialog */ "../common/js/DesignerDialog.js");
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-
-var AppSwitch = /*#__PURE__*/_createClass(function AppSwitch(permissions, conf) {
-  _classCallCheck(this, AppSwitch);
-
-  var appSwitchButtons = $(" \n            <label class=\"dropdown\" >\n\n                <span class=\"image-button\"  data-toggle=\"dropdown\">\n                  <img  src=\"../_common/images/toolbar_app_switch.svg\"/>\n                </span>\n\n                <ul class=\"dropdown-menu\" role=\"menu\" >\n                    <form class=\"form-horizontal\" role=\"form\">\n\n                      <label class=\"applicationSwitchHome image-button\">\n                        <img src=\"../_common/images/app_home.svg\"/>\n                        <div>Information<br>&nbsp;</div>\n                      </label>\n\n                      <label class=\"applicationSwitchSimulator image-button\">\n                        <img src=\"../_common/images/app_simulator.svg\"/>\n                        <div>Circuit<br>Simulator</div>\n                      </label>\n\n                      <label class=\"applicationSwitchAuthor image-button\" >\n                        <img src=\"../_common/images/app_lessons.svg\"/>\n                        <div>Lesson<br>Author</div>\n                      </label>\n\n                      <label class=\"applicationSwitchDesigner image-button\" >\n                        <img src=\"../_common/images/app_designer.svg\"/>\n                        <div>Shape<br>Designer</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchUser image-button\" >\n                        <img src=\"../_common/images/app_user.svg\"/>\n                        <div>User<br>Management</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchGroups image-button\" >\n                        <img src=\"../_common/images/app_groups.svg\"/>\n                        <div>My Groups<br>&nbsp;</div>\n                      </label>\n                      \n                    </form>\n                </ul>   \n                         \n         </span>\n    ");
-  $(".applicationSwitch").prepend(appSwitchButtons);
-  $(".applicationSwitchDesigner").off("click").on("click", function () {
-    _DesignerDialog__WEBPACK_IMPORTED_MODULE_0__["default"].show(conf);
-  });
-  $(".applicationSwitchAuthor").off("click").on("click", function () {
-    window.open("../author", "author");
-  });
-  $(".applicationSwitchSimulator").off("click").on("click", function () {
-    window.open("../circuit", "circuit");
-  });
-  $(".applicationSwitchHome").off("click").on("click", function () {
-    window.open("../home", "home");
-  });
-
-  if (permissions.featureset.usermanagement === true) {
-    $(document).on("click", ".applicationSwitchUser", function () {
-      window.open("../user", "user");
-    });
-  } else {
-    $(".applicationSwitchUser").remove();
-  }
-
-  if (permissions.featureset.records === true) {
-    $(document).on("click", ".applicationSwitchGroups", function () {
-      window.open("../groups", "groups");
-    });
-  } else {
-    $(".applicationSwitchGroups").remove();
-  }
-});
-
-
-
-/***/ }),
-
-/***/ "../common/js/AuthorPage.js":
-/*!**********************************!*\
-  !*** ../common/js/AuthorPage.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ AuthorPage)
-/* harmony export */ });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-var md = __webpack_require__(/*! markdown-it */ "./node_modules/markdown-it/index.js")();
-
-md.use(__webpack_require__(/*! markdown-it-asciimath */ "./node_modules/markdown-it-asciimath/index.js"));
-
-var AuthorPage = /*#__PURE__*/function () {
-  function AuthorPage(containerId, file, token) {
-    _classCallCheck(this, AuthorPage);
-
-    this.file = file;
-    this.containerId = containerId;
-    this.token = token;
-  }
-
-  _createClass(AuthorPage, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      var additionalParam = "";
-
-      if (this.token) {
-        additionalParam = "&token=" + this.token;
-      }
-
-      axios.get("../api/global/sheet/get?filePath=".concat(this.file).concat(additionalParam)).then(function (response) {
-        $(_this.containerId).html("");
-        var pages = response.data.pages;
-        pages.forEach(function (page, index) {
-          var container = $("<div class='authorPage'></div>");
-          $(_this.containerId).append(container);
-          var sections = page.sections;
-          sections.forEach(function (section) {
-            switch (section.type) {
-              case "brain":
-                _this.renderBrain(container, section);
-
-                break;
-
-              case "markdown":
-                _this.renderMarkdown(container, section);
-
-                break;
-
-              default:
-                break;
-            }
-          });
-          if (index < pages.length - 1) container.append("<div style='page-break-before: always;'></div>");
-        });
-      });
-    }
-  }, {
-    key: "renderMarkdown",
-    value: function renderMarkdown(container, section) {
-      var markdown = md.render(section.content);
-      container.append("<div class=\"markdownRendering\">".concat(markdown, "</div>"));
-    }
-  }, {
-    key: "renderBrain",
-    value: function renderBrain(container, section) {
-      container.append("<div class=\"imageRendering\"><img src=\"".concat(section.content.image, "\"></div>"));
-    }
-  }]);
-
-  return AuthorPage;
-}();
-
-
-
-/***/ }),
-
-/***/ "../common/js/BackendStorage.js":
-/*!**************************************!*\
-  !*** ../common/js/BackendStorage.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-var BackendStorage = /*#__PURE__*/function () {
-  /**
-   * @constructor
-   *
-   */
-  function BackendStorage(conf) {
-    _classCallCheck(this, BackendStorage);
-
-    this.conf = conf;
-  }
-
-  _createClass(BackendStorage, [{
-    key: "getFiles",
-    value: function getFiles(path, scope) {
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.conf.backend[scope].list(path)).then(function (response) {
-        // happens in "serverless" mode on the gh-pages/docs installation
-        //
-        var files = [];
-        if (typeof response === "string") files = JSON.parse(response).data.files;else files = response.data.files; // sort the result
-        // Directories are always on top
-        //
-
-        files.sort(function (a, b) {
-          if (a.type === b.type) {
-            if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-            return 0;
-          }
-
-          if (a.type === "dir") {
-            return -1;
-          }
-
-          return 1;
-        });
-        return files;
-      });
-    }
-  }, {
-    key: "saveFile",
-    value: function saveFile(json, fileName, scope) {
-      var data = {
-        filePath: fileName,
-        content: JSON.stringify(json, undefined, 2)
-      };
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.conf.backend[scope].save, data);
-    }
-  }, {
-    key: "deleteFile",
-    value: function deleteFile(fileName, scope) {
-      var data = {
-        filePath: fileName
-      };
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.conf.backend[scope]["delete"], data);
-    }
-  }, {
-    key: "createFolder",
-    value: function createFolder(folderName, scope) {
-      var data = {
-        filePath: folderName
-      };
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.conf.backend[scope].folder, data);
-    }
-  }, {
-    key: "loadUrl",
-    value: function loadUrl(url) {
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().get(url).then(function (response) {
-        // happens in "serverless" mode on the gh-pages/docs installation
-        //
-        if (typeof response === "string") return JSON.parse(response).data;
-        return response.data;
-      });
-    }
-  }, {
-    key: "sanitize",
-    value: function sanitize(file) {
-      var sanitize = __webpack_require__(/*! sanitize-filename */ "./node_modules/sanitize-filename/index.js");
-
-      file = sanitize(file, "_");
-      file = file.replace(this.conf.fileSuffix, ""); // I don't like dots in the name to
-
-      file = file.replace(RegExp("[.]", "g"), "_");
-      return file;
-    }
-  }]);
-
-  return BackendStorage;
-}();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (conf) {
-  return new BackendStorage(conf);
-});
-
-/***/ }),
-
-/***/ "../common/js/Colors.js":
-/*!******************************!*\
-  !*** ../common/js/Colors.js ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  high: "#C21B7A",
-  low: "#0078F2"
-});
-
-/***/ }),
-
-/***/ "../common/js/DecoratedInputPort.js":
-/*!******************************************!*\
-  !*** ../common/js/DecoratedInputPort.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _MarkerFigure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkerFigure */ "../common/js/MarkerFigure.js");
-
-
-var locator = __webpack_require__(/*! ./PortDecorationCenterLocator */ "../common/js/PortDecorationCenterLocator.js");
-
-var growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy();
-growPolicy.growFactor = 1.5;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.InputPort.extend({
-  NAME: "DecoratedInputPort",
-  init: function init(attr, setter, getter) {
-    var _this = this;
-
-    this.hasChanged = false;
-
-    this._super($.extend(attr, {
-      coronaWidth: 2
-    }), setter, getter);
-
-    this.decoration = new _MarkerFigure__WEBPACK_IMPORTED_MODULE_0__["default"]();
-    this.add(this.decoration, new draw2d.layout.locator.LeftLocator({
-      margin: 8
-    }));
-    this.on("disconnect", function (emitter, event) {
-      _this.decoration.setVisible(_this.getConnections().getSize() === 0); // default value of a not connected port is always HIGH
-      //
-
-
-      if (_this.getConnections().getSize() === 0) {
-        _this.setValue(true);
-      }
-    });
-    this.on("connect", function (emitter, event) {
-      _this.decoration.setVisible(false);
-    });
-    this.on("dragend", function (emitter, event) {
-      _this.decoration.setVisible(_this.getConnections().getSize() === 0);
-    });
-    this.on("drag", function (emitter, event) {
-      _this.decoration.setVisible(false);
-    }); // a port can have a value. Useful for workflow engines or circuit diagrams
-
-    this.setValue(true);
-    this.hasChanged = false;
-    this.installEditPolicy(growPolicy);
-    var circle = new draw2d.shape.basic.Circle({
-      radius: 2,
-      stroke: 0,
-      bgColor: "#909090"
-    });
-
-    circle.hitTest = function () {
-      return false;
-    };
-
-    this.add(circle, locator);
-  },
-  useDefaultValue: function useDefaultValue() {
-    this.decoration.setStick(true);
-  },
-  setValue: function setValue() {
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.0;
-
-    // convert boolean values to 5volt TTL pegel logic
-    //
-    if (typeof value === "boolean") {
-      value = value ? 5.0 : 0.0;
-    }
-
-    this.hasChanged = this.value !== value;
-
-    this._super(value);
-  },
-  hasChangedValue: function hasChangedValue() {
-    return this.hasChanged;
-  },
-  hasRisingEdge: function hasRisingEdge() {
-    return this.hasChangedValue() && this.getValue();
-  },
-  hasFallingEdge: function hasFallingEdge() {
-    return this.hasChangedValue() && !this.getValue();
-  },
-
-  /**
-   * Converts power values (0-5 volt) to boolean logic (TRUE/FALSE)
-   * v <= 1.5volt  => FALSE
-   * v >  1.5volt  => TRUE
-   *
-   * normally v must be greater to 2.2v to be HIGH. But the software can'T handle undefined values right now.
-   */
-  getBooleanValue: function getBooleanValue() {
-    return this.getValue() > 1.5;
-  },
-
-  /**
-   *
-   * Set Canvas must be overridden because all "children" must be painted BEHIND the main figures.
-   * This behaviour is different to the base implementation.
-   *
-   * If the port fades out - the little circle stays visible. This is the wanted effect.
-   *
-   * @param {draw2d.Canvas} canvas the new parent of the figure or null
-   */
-  setCanvas: function setCanvas(canvas) {
-    // remove the shape if we reset the canvas and the element
-    // was already drawn
-    if (canvas === null && this.shape !== null) {
-      if (this.isSelected()) {
-        this.unselect();
-      }
-
-      this.shape.remove();
-      this.shape = null;
-    }
-
-    this.children.each(function (i, e) {
-      e.figure.setCanvas(canvas);
-    });
-    this.canvas = canvas;
-
-    if (this.canvas !== null) {
-      this.getShapeElement();
-    } // reset the attribute cache. We must start by paint all attributes
-    //
-
-
-    this.lastAppliedAttributes = {};
-
-    if (canvas === null) {
-      this.stopTimer();
-    } else {
-      if (this.timerInterval >= this.MIN_TIMER_INTERVAL) {
-        this.startTimer(this.timerInterval);
-      }
-    }
-
-    return this;
-  }
-}));
-
-/***/ }),
-
-/***/ "../common/js/DecoratedOutputPort.js":
-/*!*******************************************!*\
-  !*** ../common/js/DecoratedOutputPort.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var locator = __webpack_require__(/*! ./PortDecorationCenterLocator */ "../common/js/PortDecorationCenterLocator.js");
-
-var growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy();
-growPolicy.growFactor = 1.5;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.OutputPort.extend({
-  NAME: "DecoratedOutputPort",
-  init: function init(attr, setter, getter) {
-    this._super($.extend(attr, {
-      coronaWidth: 2
-    }), setter, getter);
-
-    this.installEditPolicy(growPolicy);
-    var circle = new draw2d.shape.basic.Circle({
-      radius: 2,
-      stroke: 0,
-      bgColor: "#909090"
-    });
-
-    circle.hitTest = function () {
-      return false;
-    };
-
-    this.add(circle, locator);
-    this.setValue(0.0);
-  },
-
-  /**
-   * Converts power values (0-5 volt) to boolean logic (TRUE/FALSE)
-   * v <= 1.5volt  => FALSE
-   * v >  1.5volt  => TRUE
-   *
-   * normally v must be greater to 2.2v to be HIGH. But the software can'T handle undefined values right now.
-   */
-  getBooleanValue: function getBooleanValue() {
-    return this.getValue() > 1.5;
-  },
-
-  /**
-   *
-   * Set Canvas must be overridden because all "children" must be painted BEHIND the main figures.
-   * This behaviour is different to the base implementation.
-   *
-   * If the port fades out - the little circle stays visible. This is the wanted effect.
-   *
-   * @param {draw2d.Canvas} canvas the new parent of the figure or null
-   */
-  setCanvas: function setCanvas(canvas) {
-    // remove the shape if we reset the canvas and the element
-    // was already drawn
-    if (canvas === null && this.shape !== null) {
-      if (this.isSelected()) {
-        this.unselect();
-      }
-
-      this.shape.remove();
-      this.shape = null;
-    } // child must be init BEFORE the main shape. Now the child is behind the main shape and
-    // this is exact the behaviour we want.
-    //
-
-
-    this.children.each(function (i, e) {
-      e.figure.setCanvas(canvas);
-    });
-    this.canvas = canvas;
-
-    if (this.canvas !== null) {
-      this.getShapeElement();
-    } // reset the attribute cache. We must start by paint all attributes
-    //
-
-
-    this.lastAppliedAttributes = {};
-
-    if (canvas === null) {
-      this.stopTimer();
-    } else {
-      if (this.timerInterval >= this.MIN_TIMER_INTERVAL) {
-        this.startTimer(this.timerInterval);
-      }
-    }
-
-    return this;
-  }
-}));
-
-/***/ }),
-
-/***/ "../common/js/DesignerDialog.js":
-/*!**************************************!*\
-  !*** ../common/js/DesignerDialog.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var google_code_prettify_bin_prettify_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! google-code-prettify/bin/prettify.min.css */ "./node_modules/google-code-prettify/bin/prettify.min.css");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-var Dialog = /*#__PURE__*/function () {
-  function Dialog() {
-    _classCallCheck(this, Dialog);
-  }
-
-  _createClass(Dialog, [{
-    key: "show",
-    value: function show(conf, figure) {
-      if (figure) {
-        var baseName = figure.attr("userData.file").replace(/\.shape$/, "");
-        var pathToDesign = "../designer" + "?timestamp=" + new Date().getTime() + "&global=" + baseName + ".shape";
-        window.open(pathToDesign, "designer");
-      } else {
-        var _pathToDesign = "../designer";
-        window.open(_pathToDesign, "designer");
-      }
-    }
-  }]);
-
-  return Dialog;
-}();
-
-var dialog = new Dialog();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dialog);
-
-/***/ }),
-
-/***/ "../common/js/FilesScreen.js":
-/*!***********************************!*\
-  !*** ../common/js/FilesScreen.js ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Files)
-/* harmony export */ });
-/* harmony import */ var hogan_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hogan.js */ "./node_modules/hogan.js/lib/hogan.js");
-/* harmony import */ var hogan_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hogan_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _PopConfirm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PopConfirm */ "../common/js/PopConfirm.js");
-/* harmony import */ var _PopConfirm__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_PopConfirm__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! path */ "./node_modules/path/path.js");
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_3__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-
-
-
-var inputPrompt = __webpack_require__(/*! ./InputPrompt */ "../common/js/InputPrompt.js");
-
-var Files = /*#__PURE__*/function () {
-  /**
-   * @constructor
-   *
-   * @param {String} canvasId the id of the DOM element to use as paint container
-   */
-  function Files(app, conf, permissions) {
-    _classCallCheck(this, Files);
-
-    $("#files_tab a").on("click", this.onShow);
-    $("body").append(" \n        <script id=\"filesTemplate\" type=\"text/x-jsrender\">\n        <div class=\"fileOperations\">\n            <div data-folder=\"{{folder}}\" class='fileOperationsFolderAdd   fa fa-plus' > Folder</div>\n            <div data-folder=\"{{folder}}\" class='fileOperationsDocumentAdd fa fa-plus' > Document</div>\n        </div>\n        <div>Folder: {{folder}}</div>\n        <ul class=\"list-group col-lg-10 col-md-10 col-xs-10 \">\n        {{#files}}\n          <li class=\"list-group-item\"  \n                  data-scope=\"{{scope}}\"  \n                  data-type=\"{{type}}\"  \n                  data-delete=\"{{delete}}\" \n                  data-update=\"{{update}}\" \n                  data-folder=\"{{folder}}\" \n                  data-title=\"{{title}}\" \n                  data-name=\"{{folder}}{{name}}\"\n                  >\n            <div class=\"media thumb\">\n               {{#dir}}\n                  <a class=\"media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\"  src=\"../_common/images/files_folder{{back}}.svg\">\n                  </div>\n                  </a>\n               {{/dir}}\n               {{^dir}}\n                  <a class=\"thumbnail media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\" src=\"{{image}}\">\n                  </div>\n                  </a>\n               {{/dir}}\n              <div class=\"media-body\">\n                <h4 class=\"media-heading\">{{title}}</h4>\n                {{#delete}}\n                    <div class=\"deleteIcon fa fa-trash-o\" data-toggle=\"confirmation\" ></div>\n                {{/delete}}\n              </div>\n            </div>\n          </li>\n        {{/files}}\n        </ul>\n        </script>\n    ");
-    this.conf = conf;
-    this.app = app;
-    this.render(conf, permissions);
-  }
-
-  _createClass(Files, [{
-    key: "onShow",
-    value: function onShow() {
-      if ($("#materialStyle").length) return;
-      setTimeout(function () {
-        var w1 = $("#userFilesTab").outerWidth();
-        var w2 = $("#globalFilesTab").outerWidth();
-        $("<style id='materialStyle'>").prop("type", "text/css").html("\n        #userFilesTab.active ~ span.yellow-bar{\n          left: 0;\n          width: ".concat(w1, "px;\n        }\n        #globalFilesTab.active ~ span.yellow-bar{\n          left: ").concat(w1, "px;\n          width: ").concat(w2, "px;\n        })")).appendTo("head");
-      }, 100);
-    }
-  }, {
-    key: "refresh",
-    value: function refresh(conf, permissions, file) {
-      var directory = path__WEBPACK_IMPORTED_MODULE_3___default().dirname(file.name);
-
-      if (file.scope === "user") {
-        this.initPane("user", "#userFiles", conf.backend.user, permissions, directory);
-      } else {
-        this.initPane("global", "#globalFiles", conf.backend.global, permissions.global, directory);
-      }
-    }
-  }, {
-    key: "render",
-    value: function render(conf, permissions) {
-      var _this2 = this;
-
-      var storage = __webpack_require__(/*! ./BackendStorage */ "../common/js/BackendStorage.js")(conf);
-
-      this.initTabs(permissions);
-      this.initPane("user", "#userFiles", conf.backend.user, permissions, "");
-      this.initPane("global", "#globalFiles", conf.backend.global, permissions.global, "");
-      socket.off("file:generated").on("file:generated", function (msg) {
-        var preview = $(".list-group-item[data-name='" + msg.filePath + "'] img");
-
-        if (preview.length === 0) {
-          _this2.render(conf, permissions);
-        } else {
-          var scope = $(".list-group-item[data-name='" + msg.filePath + "']").data("scope");
-          $(".list-group-item[data-name='" + msg.filePath + "'] img").attr({
-            src: conf.backend[scope].image(msg.filePath) + "&timestamp=" + new Date().getTime()
-          });
-        }
-      });
-      $(document).on("click", "#userFiles .fileOperationsFolderAdd", function (event) {
-        var folder = $(event.target).data("folder") || "";
-        inputPrompt.show("Create Folder", "Folder name", function (value) {
-          storage.createFolder(folder + value, "user");
-
-          _this2.initPane("user", "#userFiles", conf.backend.user, permissions, folder);
-        });
-      }).on("click", "#globalFiles .fileOperationsFolderAdd", function (event) {
-        var folder = $(event.target).data("folder") || "";
-        inputPrompt.show("Create Folder", "Folder name", function (value) {
-          storage.createFolder(folder + value, "global");
-
-          _this2.initPane("global", "#globalFiles", conf.backend.global, permissions.global, folder);
-        });
-      }).on("click", "#userFiles .fileOperationsDocumentAdd", function (event) {
-        var folder = $(event.target).data("folder") || "";
-
-        _this2.app.fileNew(folder + "NewDocument", "user");
-
-        _this2.app.fileSave();
-      }).on("click", "#globalFiles .fileOperationsDocumentAdd", function (event) {
-        var folder = $(event.target).data("folder") || "";
-
-        _this2.app.fileNew(folder + "NewDocument", "global");
-
-        _this2.app.fileSave();
-      });
-    }
-  }, {
-    key: "initTabs",
-    value: function initTabs(permissions) {
-      // user can see private files and the demo files
-      //
-      if (permissions.list === true && permissions.global.list === true) {
-        $('#material-tabs').each(function () {
-          var $active,
-              $content,
-              $links = $(this).find('a');
-          $active = $($links[0]);
-          $active.addClass('active');
-          $content = $($active[0].hash);
-          $links.not($active).each(function () {
-            $(this.hash).hide();
-          });
-          $(this).on('click', 'a', function (e) {
-            $active.removeClass('active');
-            $content.hide();
-            $active = $(this);
-            $content = $(this.hash);
-            $active.addClass('active');
-            $content.show();
-            e.preventDefault();
-          });
-        });
-      } else if (permissions.list === false && permissions.global.list === true) {
-        $('#material-tabs').remove();
-        $("#globalFiles").show();
-        $("#userFiles").remove();
-        $("#files .title span").html("Open a document");
-      } else if (permissions.list === true && permissions.global.list === false) {
-        $('#material-tabs').remove();
-        $("#globalFiles").remove();
-        $("#userFiles").show();
-        $("#files .title span").html("Open a document");
-      } else if (permissions.list === true && permissions.global.list === false) {}
-    }
-  }, {
-    key: "initPane",
-    value: function initPane(scope, paneSelector, backendConf, permissions, initialPath) {
-      var storage = __webpack_require__(/*! ./BackendStorage */ "../common/js/BackendStorage.js")(this.conf);
-
-      if (permissions.list === false) {
-        return;
-      }
-
-      var _this = this; // load demo files
-      //
-
-
-      function loadPane(path) {
-        if (path === "/") path = "";
-        storage.getFiles(path, scope).then(function (files) {
-          files = files.filter(function (file) {
-            return file.name.endsWith(_this.conf.fileSuffix) || file.type === "dir";
-          });
-          files = files.map(function (file) {
-            return _objectSpread(_objectSpread({}, file), {}, {
-              "delete": permissions["delete"],
-              update: permissions.update,
-              scope: scope,
-              title: file.name.replace(_this.conf.fileSuffix, ""),
-              image: backendConf.image(file.filePath)
-            });
-          });
-          console.log(path);
-
-          if (path.length !== 0) {
-            files.unshift({
-              name: path__WEBPACK_IMPORTED_MODULE_3___default().dirname(path),
-              folder: "",
-              // important. Otherwise Hogan makes a lookup fallback to the root element
-              type: "dir",
-              dir: true,
-              "delete": false,
-              update: false,
-              scope: scope,
-              back: "_back",
-              title: ".."
-            });
-          }
-
-          var compiled = hogan_js__WEBPACK_IMPORTED_MODULE_0___default().compile($("#filesTemplate").html());
-          var output = compiled.render({
-            folder: path,
-            files: files
-          });
-          $(paneSelector).html($(output));
-
-          if (permissions.create === false) {
-            $(paneSelector + " .fileOperations").remove();
-          }
-
-          if (permissions["delete"] === true) {
-            $(paneSelector + " .deleteIcon").on("click", function (event) {
-              var $el = $(event.target).closest(".list-group-item");
-              var name = $el.data("name");
-              storage.deleteFile(name, scope).then(function () {
-                var parent = $el.closest(".list-group-item");
-                parent.hide('slow', function () {
-                  return parent.remove();
-                });
-              });
-            });
-            $(paneSelector + " [data-toggle='confirmation']").popConfirm({
-              title: "Delete File?",
-              content: "",
-              placement: "bottom" // (top, right, bottom, left)
-
-            });
-          } // Rename of a file or folder is the very same as delete -> create
-          // I this case the user must have the two permissions to rename a folder or file
-
-
-          if (!_this.serverless && permissions["delete"] === true && permissions.create === true) {
-            $(paneSelector + " .list-group-item h4").off("click").on("click", function (event) {
-              // check if the editor is already visible. We can do on/off of events or do it this way....
-              if ($(".filenameInplaceEdit").length > 0) {
-                $(".filenameInplaceEdit").focus();
-                $("#filenameHelpBlock").html("press ESC if you want abort the rename operation");
-                return;
-              }
-
-              Mousetrap.pause();
-              var $el = $(event.currentTarget);
-              var parent = $el.closest(".list-group-item");
-              var name = parent.data("name");
-              var folder = parent.data("folder");
-              var title = parent.data("title");
-              var type = parent.data("type");
-              var $replaceWith = $("\n                   <input type=\"input\" class=\"filenameInplaceEdit\" value=\"".concat(title, "\" />\n                   <small id=\"filenameHelpBlock\" class=\"form-text text-muted\">\n                       \n                   </small>"));
-              $el.hide();
-              $el.after($replaceWith);
-              $replaceWith.focus();
-              $replaceWith.on("click", function () {
-                return false;
-              }); // Rename the file on the Server
-              //
-
-              function fire() {
-                Mousetrap.unpause();
-                var newName = $replaceWith.val();
-
-                if (newName !== "") {
-                  if (type !== "dir") {
-                    newName = storage.sanitize(newName) + conf.fileSuffix;
-                  } // nothing to do
-
-
-                  if (newName === title) {
-                    $replaceWith.remove();
-                    $el.show();
-                    return;
-                  }
-
-                  newName = folder + newName;
-                  axios__WEBPACK_IMPORTED_MODULE_1___default().post(conf.backend[scope].rename, {
-                    from: name,
-                    to: newName
-                  }).then(function (response) {
-                    var resTitle = response.data.name.replace(_this.conf.fileSuffix, "");
-                    var resName = response.data.name;
-                    $replaceWith.remove();
-                    $el.html(resName);
-                    $el.show();
-                    parent.data("title", resTitle);
-                    parent.data("name", resName);
-                  })["catch"](function () {
-                    $("#filenameHelpBlock").html("invalid file name");
-                  });
-                } else {
-                  // get the value and post them here
-                  $replaceWith.remove();
-                  $el.show();
-                }
-              } // Cancel the rename operation
-              //
-
-
-              function cancel() {
-                $replaceWith.remove();
-                $el.show();
-              }
-
-              $replaceWith.on("keydown", function (e) {
-                switch (e.which) {
-                  case 13:
-                    fire();
-                    break;
-
-                  case 27:
-                    cancel();
-                    break;
-                }
-              });
-              event.preventDefault();
-              event.stopPropagation();
-              return false;
-            });
-          }
-
-          $(paneSelector + " .list-group-item[data-type='dir']").on("click", function (event) {
-            // check if the editor is already visible. We can do on/off of events or do it this way....
-            if ($(".filenameInplaceEdit").length > 0) {
-              $(".filenameInplaceEdit").focus();
-              $("#filenameHelpBlock").html("press ESC if you want abort the rename operation");
-              return;
-            }
-
-            var $el = $(event.currentTarget);
-            var name = $el.data("name");
-
-            if (name !== "" && !name.endsWith("/")) {
-              name = name + "/";
-            }
-
-            loadPane(name);
-          });
-          $(paneSelector + " .list-group-item[data-type='file']").on("click", function (event) {
-            // check if the editor is already visible. We can do on/off of events or do it this way....
-            if ($(".filenameInplaceEdit").length > 0) {
-              $(".filenameInplaceEdit").focus();
-              $("#filenameHelpBlock").html("press ESC if you want abort the rename operation");
-              return;
-            }
-
-            var $el = $(event.currentTarget);
-            var name = $el.data("name");
-            $el.addClass("spinner");
-            app.load(name, scope).then(function () {
-              $el.removeClass("spinner");
-              history.pushState({
-                id: 'editor',
-                scope: scope,
-                file: name
-              }, _this.conf.appName + ' | ' + name, window.location.href.split('?')[0] + '?' + scope + '=' + name);
-            });
-          });
-        });
-      }
-
-      loadPane(initialPath);
-    }
-  }]);
-
-  return Files;
-}();
-
-
-
-/***/ }),
-
-/***/ "../common/js/InputPrompt.js":
-/*!***********************************!*\
-  !*** ../common/js/InputPrompt.js ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Dialog = /*#__PURE__*/function () {
-  /**
-   * @constructor
-   *
-   */
-  function Dialog() {
-    _classCallCheck(this, Dialog);
-
-    $("body").append("\n            <div id=\"inputPromptDialog\" class=\"modal fade genericDialog\" tabindex=\"-1\">\n            <div class=\"modal-dialog \">\n              <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                  <h4 class=\"media-heading\">Input Prompt</h4>\n                </div>\n                <div class=\"modal-body\">\n                  <div class=\"media\">\n                    <fieldset>\n                      <div class=\"form-group\">\n                        <div class=\"col-lg-12\">\n                          <div class=\"promptValueLabel\">Value:</div>\n                          <input type=\"text\" class=\"form-control floating-label inputPromptValue\" value=\"\" >\n                        </div>\n                      </div>\n                    </fieldset>\n                  </div>\n                </div>\n                <div class=\"modal-footer\">\n                  <button class=\"btn\" data-dismiss=\"modal\">Cancel</button>\n                  <button class=\"btn btn-primary okButton\">Create</button>\n                </div>\n              </div>\n            </div>\n          </div>\n    ");
-  }
-  /**
-   */
-
-
-  _createClass(Dialog, [{
-    key: "show",
-    value: function show(title, label, defaultValue, callback) {
-      if (typeof defaultValue === "function") {
-        callback = defaultValue;
-        defaultValue = "";
-      }
-
-      $("#inputPromptDialog .media-heading").html(title);
-      $("#inputPromptDialog .promptValueLabel").html(label);
-      $('#inputPromptDialog .inputPromptValue').val(defaultValue);
-      $('#inputPromptDialog').on('shown.bs.modal', function (event) {
-        $(event.currentTarget).find('input:first').focus();
-      });
-      $("#inputPromptDialog").modal("show");
-      Mousetrap.pause();
-      $('#inputPromptDialog .inputPromptValue').on('keypress', function (e) {
-        var key = e.charCode || e.keyCode || 0;
-
-        if (key === 13) {
-          $("#inputPromptDialog .okButton").click();
-        }
-      }); // Save Button
-      //
-
-      $("#inputPromptDialog .okButton").off('click').on("click", function () {
-        Mousetrap.unpause();
-        $('#inputPromptDialog').modal('hide');
-        var value = $("#inputPromptDialog .inputPromptValue").val();
-        callback(value);
-      });
-    }
-  }]);
-
-  return Dialog;
-}();
-
-var dialog = new Dialog();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dialog);
-
-/***/ }),
-
-/***/ "../common/js/LinkShareDialog.js":
-/*!***************************************!*\
-  !*** ../common/js/LinkShareDialog.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _toast__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toast */ "../common/js/toast.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-var Dialog = /*#__PURE__*/function () {
-  /**
-   * @constructor
-   *
-   */
-  function Dialog() {
-    _classCallCheck(this, Dialog);
-
-    $("body").append("\n            <div id=\"linkShareDialog\" class=\"modal fade genericDialog\" tabindex=\"-1\">\n            <div class=\"modal-dialog \">\n              <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                  <h4 class=\"media-heading\">Share with Others</h4>\n                </div>\n                <div class=\"modal-body\">\n                  <div class=\"media\">\n                    <div class=\"promptValueLabel\">Public Link:</div>\n                    <fieldset>\n                      <div class=\"form-group\">\n                        <div class=\"col-lg-12\">\n                          <input id=\"sharedLinkInput\" type=\"text\" class=\"form-control floating-label\" value=\"\" > <button class=\"clipboardButton\" style=\"float:right\">copy</button>\n                        </div>\n                      </div>\n                    </fieldset>\n                  </div>\n                </div>\n                <div class=\"modal-footer\">\n                  <button class=\"btn\" data-dismiss=\"modal\">Close</button>\n                </div>\n              </div>\n            </div>\n          </div>\n    ");
-  }
-  /**
-   */
-
-
-  _createClass(Dialog, [{
-    key: "show",
-    value: function show(file) {
-      var url = window.location.href.split('?')[0] + '?shared=' + file;
-      $("#sharedLinkInput").val(url);
-      $('#linkShareDialog').on('shown.bs.modal', function (event) {
-        $(event.currentTarget).find('input:first').focus();
-      });
-      $("#linkShareDialog").modal("show");
-      $("#linkShareDialog .clipboardButton").on("click", function () {
-        var copyText = document.getElementById("sharedLinkInput");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        $('#linkShareDialog').modal('hide');
-        (0,_toast__WEBPACK_IMPORTED_MODULE_0__["default"])("Link copied");
-      });
-    }
-  }]);
-
-  return Dialog;
-}();
-
-var dialog = new Dialog();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dialog);
-
-/***/ }),
-
-/***/ "../common/js/MarkerFigure.js":
-/*!************************************!*\
-  !*** ../common/js/MarkerFigure.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _MarkerStateAFigure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkerStateAFigure */ "../common/js/MarkerStateAFigure.js");
-/* harmony import */ var _MarkerStateBFigure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MarkerStateBFigure */ "../common/js/MarkerStateBFigure.js");
-/* harmony import */ var _Colors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Colors */ "../common/js/Colors.js");
-/**
- * The markerFigure is the left hand side annotation for a DecoratedPort.
- *
- * It contains two children
- *
- * StateAFigure: if the mouse hover and the figure isn't permanent visible
- * StateBFigure: either the mouse is over or the user pressed the checkbox to stick the figure on the port
- *
- * This kind of decoration is usefull for defualt values on workflwos enginges or circuit diagrams
- *
- */
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.shape.layout.VerticalLayout.extend({
-  NAME: "MarkerFigure",
-  init: function init(attr, setter, getter) {
-    var _this = this;
-
-    this.isMouseOver = false; // indicator if the mouse is over the element
-
-    this.stick = false; // indicator if the stateBFigure should always be visible
-
-    this.defaultValue = true; // current selected default value for the decoration
-
-    this._super($.extend({
-      stroke: 0
-    }, attr), setter, getter); // figure if the decoration is not permanent visible (sticky note)
-
-
-    this.add(this.stateA = new _MarkerStateAFigure__WEBPACK_IMPORTED_MODULE_0__["default"]({
-      text: "X"
-    })); // figure if the decoration permanent visible
-
-    this.add(this.stateB = new _MarkerStateBFigure__WEBPACK_IMPORTED_MODULE_1__["default"]({
-      text: "X"
-    }));
-    this.on("mouseenter", function (emitter, event) {
-      _this.onMouseOver(true);
-    });
-    this.on("mouseleave", function (emitter, event) {
-      _this.onMouseOver(false);
-    });
-    this.on("click", function (emitter, event) {
-      if (_this.isVisible() === false) {
-        return; //silently
-      }
-
-      if (_this.stateB.getStickTickFigure().getBoundingBox().hitTest(event.x, event.y) === true) {
-        _this.setStick(!_this.getStick());
-      } else if (_this.stateB.getLabelFigure().getBoundingBox().hitTest(event.x, event.y) === true) {
-        $.contextMenu({
-          selector: 'body',
-          trigger: "left",
-          events: {
-            hide: function hide() {
-              $.contextMenu('destroy');
-            }
-          },
-          callback: $.proxy(function (key, options) {
-            // propagate the default value to the port
-            //
-            switch (key) {
-              case "high":
-                _this.setDefaultValue(true);
-
-                _this.setStick(true);
-
-                break;
-
-              case "low":
-                _this.setDefaultValue(false);
-
-                _this.setStick(true);
-
-                break;
-
-              default:
-                break;
-            }
-          }, this),
-          x: event.x,
-          y: event.y,
-          items: {
-            "high": {
-              name: "High"
-            },
-            "low": {
-              name: "Low"
-            }
-          }
-        });
-      }
-    });
-    this.setDefaultValue(true);
-    this.onMouseOver(false);
-  },
-  onMouseOver: function onMouseOver(flag) {
-    this.isMouseOver = flag;
-
-    if (this.visible === false) {
-      return; // silently
-    }
-
-    if (this.stick === true) {
-      this.stateA.setVisible(false);
-      this.stateB.setVisible(true);
-    } else {
-      this.stateA.setVisible(!this.isMouseOver);
-      this.stateB.setVisible(this.isMouseOver);
-    }
-
-    return this;
-  },
-  setVisible: function setVisible(flag) {
-    this._super(flag); // update the hover/stick state of the figure
-
-
-    this.onMouseOver(this.isMouseOver);
-    return this;
-  },
-  setStick: function setStick(flag) {
-    this.stick = flag;
-    this.onMouseOver(this.isMouseOver); // the port has only a default value if the decoration is visible
-
-    this.parent.setValue(flag ? this.defaultValue : null);
-    this.stateB.setTick(this.getStick());
-    return this;
-  },
-  getStick: function getStick() {
-    return this.stick;
-  },
-  setText: function setText(text) {
-    this.stateB.setText(text);
-    return this;
-  },
-  setDefaultValue: function setDefaultValue(value) {
-    this.defaultValue = value;
-    this.setText(this.defaultValue === true ? "High" : "Low ");
-    this.stateB.setTintColor(this.defaultValue === true ? _Colors__WEBPACK_IMPORTED_MODULE_2__["default"].high : _Colors__WEBPACK_IMPORTED_MODULE_2__["default"].low); // only propagate the value to the parent if the decoration permanent visible
-    //
-
-    if (this.stick === true) {
-      this.parent.setValue(this.defaultValue);
-    }
-  }
-}));
-
-/***/ }),
-
-/***/ "../common/js/MarkerStateAFigure.js":
-/*!******************************************!*\
-  !*** ../common/js/MarkerStateAFigure.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * This is only the mouseover reactive shape. A little bit smaller than the visible shape
- *
- * Or you can display this shape with opacity of 0.2 to indicate that this is a reactive area.
- */
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.shape.basic.Label.extend({
-  NAME: "MarkerStateAFigure",
-
-  /**
-   * @param attr
-   */
-  init: function init(attr, setter, getter) {
-    this._super($.extend({
-      padding: {
-        left: 5,
-        top: 2,
-        bottom: 2,
-        right: 10
-      },
-      bgColor: null,
-      stroke: 1,
-      color: null,
-      fontColor: null,
-      fontSize: 8
-    }, attr), setter, getter); // we must override the hitTest method to ensure that the parent can receive the mouseenter/mouseleave events.
-    // Unfortunately draw2D didn't provide event bubbling like HTML. The first shape in queue consumes the event.
-    //
-    // now this shape is "dead" for any mouse events and the parent must/can handle this.
-
-
-    this.hitTest = function () {
-      return false;
-    };
-  }
-}));
-
-/***/ }),
-
-/***/ "../common/js/MarkerStateBFigure.js":
-/*!******************************************!*\
-  !*** ../common/js/MarkerStateBFigure.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Colors */ "../common/js/Colors.js");
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw2d.shape.layout.HorizontalLayout.extend({
-  NAME: "MarkerStateBFigure",
-
-  /**
-   * @param attr
-   */
-  init: function init(attr, setter, getter) {
-    this.tintColor = _Colors__WEBPACK_IMPORTED_MODULE_0__["default"].low;
-
-    this._super($.extend({
-      bgColor: "#FFFFFF",
-      stroke: 1,
-      color: _Colors__WEBPACK_IMPORTED_MODULE_0__["default"].low,
-      radius: 2,
-      padding: {
-        left: 3,
-        top: 2,
-        bottom: 0,
-        right: 8
-      },
-      gap: 5
-    }, attr), setter, getter);
-
-    this.stickTick = new draw2d.shape.basic.Circle({
-      diameter: 8,
-      bgColor: "#f0f0f0",
-      stroke: 1,
-      resizeable: false
-    });
-    this.add(this.stickTick);
-
-    this.stickTick.hitTest = function () {
-      return false;
-    };
-
-    this.stickTick.addCssClass("highlightOnHover");
-    this.label = new draw2d.shape.basic.Label({
-      text: attr ? attr.text : "X",
-      resizeable: false,
-      stroke: 0,
-      padding: 0,
-      fontSize: 8,
-      fontColor: "#303030"
-    });
-    this.add(this.label);
-
-    this.label.hitTest = function () {
-      return false;
-    };
-
-    this.label.addCssClass("highlightOnHover"); // we must override the hitTest method to ensure that the parent can receive the mouseenter/mouseleave events.
-    // Unfortunately draw2D didn't provide event bubbling like HTML. The first shape in queue consumes the event.
-    //
-    // now this shape is "dead" for any mouse events and the parent must/can handle this.
-
-    this.hitTest = function () {
-      return false;
-    };
-  },
-  setText: function setText(text) {
-    this.label.setText(text);
-  },
-  setTintColor: function setTintColor(color) {
-    this.tintColor = color;
-    this.attr({
-      color: color
-    });
-    this.label.attr({
-      fontColor: color
-    });
-  },
-  setTick: function setTick(flag) {
-    this.stickTick.attr({
-      bgColor: flag ? this.tintColor : "#f0f0f0"
-    });
-  },
-  getStickTickFigure: function getStickTickFigure() {
-    return this.stickTick;
-  },
-  getLabelFigure: function getLabelFigure() {
-    return this.label;
-  },
-
-  /**
-   * @method
-   *
-   *
-   * @template
-   **/
-  repaint: function repaint(attributes) {
-    if (this.repaintBlocked === true || this.shape === null) {
-      return;
-    }
-
-    attributes = attributes || {};
-    attributes.path = this.calculatePath();
-
-    this._super(attributes);
-  },
-
-  /**
-   * @method
-   *
-   * Override the default rendering of the HorizontalLayout, which is a simple
-   * rectangle. We want an arrow.
-   */
-  createShapeElement: function createShapeElement() {
-    return this.canvas.paper.path(this.calculatePath());
-  },
-
-  /**
-   * stupid copy&paste the code from the Polygon shape...unfortunately the LayoutFigure isn't a polygon.
-   *
-   * @returns {string}
-   */
-  calculatePath: function calculatePath() {
-    var arrowLength = 8;
-    this.vertices = new draw2d.util.ArrayList();
-    var w = this.width;
-    var h = this.height;
-    var pos = this.getAbsolutePosition();
-    var i = 0;
-    var length = 0;
-    this.vertices.add(new draw2d.geo.Point(pos.x, pos.y));
-    this.vertices.add(new draw2d.geo.Point(pos.x + w - arrowLength, pos.y));
-    this.vertices.add(new draw2d.geo.Point(pos.x + w, pos.y + h / 2));
-    this.vertices.add(new draw2d.geo.Point(pos.x + w - arrowLength, pos.y + h));
-    this.vertices.add(new draw2d.geo.Point(pos.x, pos.y + h));
-    var radius = this.getRadius();
-    var path = []; // hard corners
-    //
-
-    if (radius === 0) {
-      length = this.vertices.getSize();
-      var p = this.vertices.get(0);
-      path.push("M", p.x, " ", p.y);
-
-      for (i = 1; i < length; i++) {
-        p = this.vertices.get(i);
-        path.push("L", p.x, " ", p.y);
-      }
-
-      path.push("Z");
-    } // soften/round corners
-    //
-    else {
-      length = this.vertices.getSize();
-      var start = this.vertices.first();
-      var end = this.vertices.last();
-
-      if (start.equals(end)) {
-        length = length - 1;
-        end = this.vertices.get(length - 1);
-      }
-
-      var begin = draw2d.geo.Util.insetPoint(start, end, radius);
-      path.push("M", begin.x, ",", begin.y);
-
-      for (i = 0; i < length; i++) {
-        start = this.vertices.get(i);
-        end = this.vertices.get((i + 1) % length);
-        var modStart = draw2d.geo.Util.insetPoint(start, end, radius);
-        var modEnd = draw2d.geo.Util.insetPoint(end, start, radius);
-        path.push("Q", start.x, ",", start.y, " ", modStart.x, ", ", modStart.y);
-        path.push("L", modEnd.x, ",", modEnd.y);
-      }
-    }
-
-    return path.join("");
-  }
-}));
-
-/***/ }),
-
-/***/ "../common/js/PopConfirm.js":
-/*!**********************************!*\
-  !*** ../common/js/PopConfirm.js ***!
-  \**********************************/
-/***/ (() => {
-
-$.fn.extend({
-  popConfirm: function popConfirm(options) {
-    var defaults = {
-      title: 'Confirmation',
-      content: 'Are you really sure ?',
-      placement: 'right',
-      container: 'body',
-      yesBtn: 'Yes',
-      noBtn: 'No'
-    },
-        last = null;
-    options = $.extend(defaults, options);
-    return this.each(function () {
-      var self = $(this),
-          arrayActions = [],
-          arrayDelegatedActions = [],
-          eventToConfirm,
-          optName,
-          optValue,
-          i,
-          elmType,
-          code,
-          form; // Load data-* attriutes
-
-      for (optName in options) {
-        if (options.hasOwnProperty(optName)) {
-          optValue = $(this).attr('data-confirm-' + optName);
-
-          if (optValue) {
-            options[optName] = optValue;
-          }
-        }
-      } // If there are jquery click events
-
-
-      if (jQuery._data(this, "events") && jQuery._data(this, "events").click) {
-        // Save all click handlers
-        for (i = 0; i < jQuery._data(this, "events").click.length; i = i + 1) {
-          arrayActions.push(jQuery._data(this, "events").click[i].handler);
-        } // unbind it to prevent it firing
-
-
-        $(self).unbind("click");
-      } // If there are jquery delegated click events
-
-
-      if (self.data('remote') && jQuery._data(document, "events") && jQuery._data(document, "events").click) {
-        // Save all delegated click handlers that apply
-        for (i = 0; i < jQuery._data(document, "events").click.length; i = i + 1) {
-          elmType = self[0].tagName.toLowerCase();
-
-          if (jQuery._data(document, "events").click[i].selector && jQuery._data(document, "events").click[i].selector.indexOf(elmType + "[data-remote]") !== -1) {
-            arrayDelegatedActions.push(jQuery._data(document, "events").click[i].handler);
-          }
-        }
-      } // If there are hard onclick attribute
-
-
-      if (self.attr('onclick')) {
-        // Extracting the onclick code to evaluate and bring it into a closure
-        code = self.attr('onclick');
-        arrayActions.push(function () {
-          eval(code);
-        });
-        $(self).prop("onclick", null);
-      } // If there are href link defined
-
-
-      if (!self.data('remote') && self.attr('href')) {
-        // Assume there is a href attribute to redirect to
-        arrayActions.push(function () {
-          window.location.href = self.attr('href');
-        });
-      } // If the button is a submit one
-
-
-      if (self.attr('type') && self.attr('type') === 'submit') {
-        // Get the form related to this button then store submiting in closure
-        form = $(this).parents('form:first');
-        arrayActions.push(function () {
-          // Add the button name / value if specified
-          if (typeof self.attr('name') !== "undefined") {
-            $('<input type="hidden">').attr('name', self.attr('name')).attr('value', self.attr('value')).appendTo(form);
-          }
-
-          form.submit();
-        });
-      }
-
-      self.popover({
-        trigger: 'manual',
-        title: options.title,
-        html: true,
-        placement: options.placement,
-        container: options.container,
-        //Avoid using multiline strings, no support in older browsers.
-        content: options.content + '<p class="button-group" style="margin-top: 10px; text-align: center;"><button type="button" class="btn btn-small confirm-dialog-btn-abort">' + options.noBtn + '</button> <button type="button" class="btn btn-small btn-danger confirm-dialog-btn-confirm">' + options.yesBtn + '</button></p>'
-      }).click(function (e) {
-        if (last && last !== self) {
-          last.popover('hide').removeClass('popconfirm-active');
-        }
-
-        last = self;
-      });
-      $(document).on('click', function () {
-        if (last) {
-          last.popover('hide').removeClass('popconfirm-active');
-        }
-      });
-      self.bind('click', function (e) {
-        eventToConfirm = e;
-        e.preventDefault();
-        e.stopPropagation();
-        $('.popconfirm-active').not(self).popover('hide').removeClass('popconfirm-active');
-        self.popover('show').addClass('popconfirm-active');
-        $(document).find('.popover .confirm-dialog-btn-confirm').one('click', function (e) {
-          for (i = 0; i < arrayActions.length; i = i + 1) {
-            arrayActions[i].apply(self, [eventToConfirm]);
-          }
-
-          for (i = 0; i < arrayDelegatedActions.length; i = i + 1) {
-            arrayDelegatedActions[i].apply(self, [eventToConfirm.originalEvent]);
-          }
-
-          self.popover('hide').removeClass('popconfirm-active');
-        });
-        $(document).find('.popover .confirm-dialog-btn-abord').bind('click', function (e) {
-          self.popover('hide').removeClass('popconfirm-active');
-        });
-      });
-    });
-  }
-});
-
-/***/ }),
-
-/***/ "../common/js/PortDecorationCenterLocator.js":
-/*!***************************************************!*\
-  !*** ../common/js/PortDecorationCenterLocator.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * @class
- *
- * A CenterLocator is used to place figures in the center of a parent shape.
- *
- *
- *
- * @example
- *
- *
- *    // create a basic figure and add a Label/child via API call
- *    //
- *    let circle = new draw2d.shape.basic.Circle({diameter:120});
- *    circle.setStroke(3);
- *    circle.setColor("#A63343");
- *    circle.setBackgroundColor("#E65159");
- *    circle.add(new draw2d.shape.basic.Label({text:"Center Label"}), new draw2d.layout.locator.CenterLocator());
- *    canvas.add( circle, 100,50);
- *
- *
- * @author Andreas Herz
- * @extend draw2d.layout.locator.Locator
- */
-var Locator = draw2d.layout.locator.Locator.extend(
-/** @lends draw2d.layout.locator.CenterLocator.prototype */
-{
-  NAME: "draw2d.layout.locator.CenterLocator",
-
-  /**
-   * Constructs a locator with associated parent.
-   *
-   */
-  init: function init(attr, setter, getter) {
-    this._super(attr, setter, getter);
-  },
-
-  /**
-   * 
-   * Relocates the given Figure.
-   *
-   * @param {Number} index child index of the target
-   * @param {draw2d.Figure} target The figure to relocate
-   **/
-  relocate: function relocate(index, target) {
-    target.setCenter(0, 0);
-  }
-});
-var locator = new Locator();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (locator);
-
-/***/ }),
-
-/***/ "../common/js/Userinfo.js":
-/*!********************************!*\
-  !*** ../common/js/Userinfo.js ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Userinfo)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-var Userinfo = /*#__PURE__*/function () {
-  function Userinfo(permissions, conf) {
-    var _this = this;
-
-    _classCallCheck(this, Userinfo);
-
-    if (permissions.featureset.authentication === false) {
-      $(".userinfo_toggler").remove();
-    } else {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("../userinfo").then(function (response) {
-        _this.user = response.data;
-        var icon = _this.user.role === "admin" ? "../_common/images/toolbar_admin.svg" : "../_common/images/toolbar_user.svg";
-        var role = _this.user.role === "admin" ? "(Administrator)" : "";
-        $(".userinfo_toggler img").attr("src", icon);
-        $(".userinfo_toggler .dropdown-menu").html(" \n              <div class=\"userContainer\">\n                <img  src=\"".concat(icon, "\"/>\n                <div>").concat(_this.user.displayName, "</div>\n                <div>").concat(role, "</div>\n                <button class=\"logoutButton\">Logout</button>\n              </div>\n          "));
-        $(".userinfo_toggler .logoutButton").on("click", function () {
-          window.location.replace("../logout?returnTo=" + conf.loginRedirect);
-        });
-      })["catch"](function () {
-        var loginButton = $("<button class='loginButton'>Login</button>");
-        $(".userinfo_toggler").html(loginButton);
-        $(document).on("click", ".loginButton", function () {
-          window.location.replace("../login?returnTo=" + conf.loginRedirect);
-        });
-      });
-    }
-  }
-
-  _createClass(Userinfo, [{
-    key: "getUser",
-    value: function getUser() {
-      return this.user;
-    }
-  }]);
-
-  return Userinfo;
-}();
-
-
-
-/***/ }),
-
-/***/ "../common/js/checkElement.js":
-/*!************************************!*\
-  !*** ../common/js/checkElement.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ checkElement)
-/* harmony export */ });
-function rafAsync() {
-  return new Promise(function (resolve) {
-    requestAnimationFrame(resolve); //faster than set time out
-  });
-}
-
-function checkElement(selector) {
-  if (document.querySelector(selector) === null) {
-    return rafAsync().then(function () {
-      return checkElement(selector);
-    });
-  } else {
-    return Promise.resolve(true);
-  }
-}
-
-/***/ }),
-
-/***/ "../common/js/inlineSVG.js":
-/*!*********************************!*\
-  !*** ../common/js/inlineSVG.js ***!
-  \*********************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
-(function (root, factory) {
-  if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)),
-		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {}
-})(typeof __webpack_require__.g !== "undefined" ? __webpack_require__.g : this.window || this.global, function (root) {
-  // Variables
-  var inlineSVG = {},
-      supports = !!document.querySelector && !!root.addEventListener,
-      settings; // Defaults
-
-  var defaults = {
-    initClass: 'js-inlinesvg',
-    svgSelector: 'img.svg'
-  };
-  /**
-   * Stolen from underscore.js
-   * @private
-   * @param {Int} times
-   * @param {Function} func
-   */
-
-  var after = function after(times, func) {
-    return function () {
-      if (--times < 1) {
-        return func.apply(this, arguments);
-      }
-    };
-  };
-  /**
-   * Merge two objects together
-   * @private
-   * @param {Function} fn
-   */
-
-
-  var extend = function extend() {
-    // Variables
-    var extended = {};
-    var deep = false;
-    var i = 0;
-    var length = arguments.length; // Check if a deep merge
-
-    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
-      deep = arguments[0];
-      i++;
-    } // Merge the object into the extended object
-
-
-    var merge = function merge(obj) {
-      for (var prop in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-          // If deep merge and property is an object, merge properties
-          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
-            extended[prop] = extend(true, extended[prop], obj[prop]);
-          } else {
-            extended[prop] = obj[prop];
-          }
-        }
-      }
-    }; // Loop through each object and conduct a merge
-
-
-    for (; i < length; i++) {
-      var obj = arguments[i];
-      merge(obj);
-    }
-
-    return extended;
-  }; // Methods
-
-  /**
-   * Grab all the SVGs that match the selector
-   * @public
-   */
-
-
-  var getAll = function getAll() {
-    var svgs = document.querySelectorAll(settings.svgSelector);
-    return svgs;
-  };
-  /**
-   * Inline all the SVGs in the array
-   * @public
-   */
-
-
-  var inliner = function inliner(cb) {
-    var svgs = getAll();
-    var callback = after(svgs.length, cb);
-    Array.prototype.forEach.call(svgs, function (svg, i) {
-      // Store some attributes of the image
-      var src = svg.src || svg.getAttribute('data-src'),
-          attributes = svg.attributes; // Get the contents of the SVG
-
-      var request = new XMLHttpRequest();
-      request.open('GET', src, true);
-
-      request.onload = function () {
-        if (request.status >= 200 && request.status < 400) {
-          // Setup a parser to convert the response to text/xml in order for it
-          // to be manipulated and changed
-          var parser = new DOMParser(),
-              result = parser.parseFromString(request.responseText, 'text/xml'),
-              inlinedSVG = result.getElementsByTagName('svg')[0];
-          var titles = inlinedSVG.getElementsByTagName('title');
-
-          while (titles[0]) {
-            titles[0].parentNode.removeChild(titles[0]);
-          }
-
-          var descs = inlinedSVG.getElementsByTagName('desc');
-
-          while (descs[0]) {
-            descs[0].parentNode.removeChild(descs[0]);
-          } // Remove some of the attributes that aren't needed
-
-
-          inlinedSVG.removeAttribute('xmlns:a');
-          inlinedSVG.removeAttribute('width');
-          inlinedSVG.removeAttribute('height');
-          inlinedSVG.removeAttribute('x');
-          inlinedSVG.removeAttribute('y');
-          inlinedSVG.removeAttribute('enable-background');
-          inlinedSVG.removeAttribute('xmlns:xlink');
-          inlinedSVG.removeAttribute('xml:space');
-          inlinedSVG.removeAttribute('version'); // Add in the attributes from the original <img> except `src` or
-          // `alt`, we don't need either
-
-          Array.prototype.slice.call(attributes).forEach(function (attribute) {
-            if (attribute.name !== 'src' && attribute.name !== 'alt') {
-              inlinedSVG.setAttribute(attribute.name, attribute.value);
-            }
-          }); // Add an additional class to the inlined SVG to imply it was
-          // infact inlined, might be useful to know
-
-          if (inlinedSVG.classList) {
-            inlinedSVG.classList.add('inlined-svg');
-          } else {
-            inlinedSVG.className += ' ' + 'inlined-svg';
-          } // Add in some accessibility quick wins
-
-
-          inlinedSVG.setAttribute('role', 'img'); // Use the `longdesc` attribute if one exists
-
-          if (attributes.longdesc) {
-            var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
-                descriptionText = document.createTextNode(attributes.longdesc.value);
-            description.appendChild(descriptionText);
-            inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
-          } // Use the `alt` attribute if one exists
-
-
-          if (attributes.alt) {
-            inlinedSVG.setAttribute('aria-labelledby', 'title');
-            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
-                titleText = document.createTextNode(attributes.alt.value);
-            title.appendChild(titleText);
-            inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
-          } // Replace the image with the SVG
-
-
-          svg.parentNode.replaceChild(inlinedSVG, svg); // Fire the callback
-
-          callback(settings.svgSelector);
-        } else {
-          console.error('There was an error retrieving the source of the SVG.');
-        }
-      };
-
-      request.onerror = function () {
-        console.error('There was an error connecting to the origin server.');
-      };
-
-      request.send();
-    });
-  };
-  /**
-   * Initialise the inliner
-   * @public
-   */
-
-
-  inlineSVG.init = function (options, callback) {
-    // Test for support
-    if (!supports) return; // Merge users option with defaults
-
-    settings = extend(defaults, options || {}); // Kick-off the inliner
-
-    inliner(callback || function () {});
-  };
-
-  return inlineSVG;
-});
-
-/***/ }),
-
-/***/ "../common/js/toast.js":
-/*!*****************************!*\
-  !*** ../common/js/toast.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(text) {
-  $("body").append($("<div id=\"notificationToast\">".concat(text, "</div>")));
-  $("#notificationToast").delay(900).animate({
-    top: "+=20"
-  }, 500).delay(1500).animate({
-    top: "-=20"
-  }, 300, function () {
-    $("#notificationToast").remove();
-  });
-}
 
 /***/ }),
 
@@ -72591,9 +72591,12 @@ $(window).load(function () {
         $(this).remove();
       });
     }).fail(function () {
-      if (arguments[0].readyState === 0) {//script failed to load
+      if (arguments[0].readyState === 0) {
+        //script failed to load
+        console.log("failed to load script");
       } else {
         //script loaded but failed to parse
+        console.log("failed to parse loaded script");
         alert(arguments[2].toString());
       }
     });
