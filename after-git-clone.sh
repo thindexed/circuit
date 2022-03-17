@@ -6,4 +6,4 @@ if [ -f ./configuration/settings.ini ]; then
 fi
 
 
-copy -r ./common/src/web/ ./src/web/common
+cp -r ./common/src/web/ ./src/web/common
