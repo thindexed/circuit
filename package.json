@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "script-loader": "^0.7.2"
+  }
+}
