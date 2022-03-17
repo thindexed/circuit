@@ -101,7 +101,7 @@ export default class Files {
 
   render(conf, permissions) {
     let s =  require("./BackendStorage")
-    let storage = require("./BackendStorage")(conf)
+    let storage = require("./BackendStorage").default(conf)
 
     this.initTabs(permissions)
     this.initPane("user",   "#userFiles",   conf.backend.user,   permissions       , "")

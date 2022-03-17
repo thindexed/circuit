@@ -2837,7 +2837,7 @@ var Files = /*#__PURE__*/function () {
 
       var s = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js");
 
-      var storage = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")(conf);
+      var storage = (__webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")["default"])(conf);
 
       this.initTabs(permissions);
       this.initPane("user", "#userFiles", conf.backend.user, permissions, "");
