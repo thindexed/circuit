@@ -37,7 +37,7 @@ export default class Files {
                {{#dir}}
                   <a class="media-left">
                   <div style="width: 48px; height: 48px">
-                    <img style="width:100%; height:100%; object-fit: contain"  src="../_common/images/files_folder{{back}}.svg">
+                    <img style="width:100%; height:100%; object-fit: contain"  src="../common/images/files_folder{{back}}.svg">
                   </div>
                   </a>
                {{/dir}}
@@ -100,7 +100,6 @@ export default class Files {
   }
 
   render(conf, permissions) {
-    let s =  require("./BackendStorage")
     let storage = require("./BackendStorage").default(conf)
 
     this.initTabs(permissions)

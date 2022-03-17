@@ -9,39 +9,39 @@ export default class AppSwitch {
             <label class="dropdown" >
 
                 <span class="image-button"  data-toggle="dropdown">
-                  <img  src="../_common/images/toolbar_app_switch.svg"/>
+                  <img  src="../common/images/toolbar_app_switch.svg"/>
                 </span>
 
                 <ul class="dropdown-menu" role="menu" >
                     <form class="form-horizontal" role="form">
 
                       <label class="applicationSwitchHome image-button">
-                        <img src="../_common/images/app_home.svg"/>
+                        <img src="../common/images/app_home.svg"/>
                         <div>Information<br>&nbsp;</div>
                       </label>
 
                       <label class="applicationSwitchSimulator image-button">
-                        <img src="../_common/images/app_simulator.svg"/>
+                        <img src="../common/images/app_simulator.svg"/>
                         <div>Circuit<br>Simulator</div>
                       </label>
 
                       <label class="applicationSwitchAuthor image-button" >
-                        <img src="../_common/images/app_lessons.svg"/>
+                        <img src="../common/images/app_lessons.svg"/>
                         <div>Lesson<br>Author</div>
                       </label>
 
                       <label class="applicationSwitchDesigner image-button" >
-                        <img src="../_common/images/app_designer.svg"/>
+                        <img src="../common/images/app_designer.svg"/>
                         <div>Shape<br>Designer</div>
                       </label>
                       
                       <label class="applicationSwitchUser image-button" >
-                        <img src="../_common/images/app_user.svg"/>
+                        <img src="../common/images/app_user.svg"/>
                         <div>User<br>Management</div>
                       </label>
                       
                       <label class="applicationSwitchGroups image-button" >
-                        <img src="../_common/images/app_groups.svg"/>
+                        <img src="../common/images/app_groups.svg"/>
                         <div>My Groups<br>&nbsp;</div>
                       </label>
                       

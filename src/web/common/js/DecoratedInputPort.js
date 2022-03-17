@@ -1,6 +1,6 @@
 import MarkerFigure from "./MarkerFigure"
 
-let locator = require("./PortDecorationCenterLocator")
+let locator = require("./PortDecorationCenterLocator").default
 
 let growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy()
 growPolicy.growFactor = 1.5

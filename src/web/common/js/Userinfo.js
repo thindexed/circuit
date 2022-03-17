@@ -13,7 +13,7 @@ export default class Userinfo {
       axios.get("../userinfo")
         .then((response) => {
           this.user = response.data
-          let icon = this.user.role==="admin"?"../_common/images/toolbar_admin.svg":"../_common/images/toolbar_user.svg"
+          let icon = this.user.role==="admin"?"../common/images/toolbar_admin.svg":"../common/images/toolbar_user.svg"
           let role = this.user.role==="admin"?"(Administrator)":""
           $(".userinfo_toggler img").attr("src",icon)
           $(".userinfo_toggler .dropdown-menu").html(` 
