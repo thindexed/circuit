@@ -4221,6 +4221,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _io_Writer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./io/Writer */ "./js/io/Writer.js");
 /* harmony import */ var _common_js_AuthorPage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../common/js/AuthorPage */ "./common/js/AuthorPage.js");
 /* harmony import */ var _common_js_AppSwitch__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../common/js/AppSwitch */ "./common/js/AppSwitch.js");
+/* harmony import */ var _common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../common/js/BackendStorage */ "./common/js/BackendStorage.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4248,7 +4249,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var storage = __webpack_require__(/*! ../common/js/BackendStorage */ "./common/js/BackendStorage.js")(_Configuration__WEBPACK_IMPORTED_MODULE_7__["default"]);
+var storage = (0,_common_js_BackendStorage__WEBPACK_IMPORTED_MODULE_14__["default"])(_Configuration__WEBPACK_IMPORTED_MODULE_7__["default"]);
 
 var Application = /*#__PURE__*/function () {
   /**

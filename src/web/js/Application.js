@@ -19,7 +19,8 @@ import shareDialog from "../common/js/LinkShareDialog";
 import writer from "./io/Writer";
 import AuthorPage from "../common/js/AuthorPage";
 import AppSwitch from "../common/js/AppSwitch";
-let storage = require('../common/js/BackendStorage')(conf)
+import storageFactory from '../common/js/BackendStorage'
+let storage = storageFactory(conf)
 
 
 class Application {
