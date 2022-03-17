@@ -72575,11 +72575,12 @@ $(window).load(function () {
 
     for (var k in global["default"]) {
       window[k] = global[k];
-    } // we must load the "shape/index.js" in the global scope.
-    //
+    }
 
+    var s = document.createElement("script");
+    s.setAttribute("src", _Configuration__WEBPACK_IMPORTED_MODULE_5__["default"].shapes.url + "index.js");
 
-    $.getScript(_Configuration__WEBPACK_IMPORTED_MODULE_5__["default"].shapes.url + "index.js", function () {
+    s.onload = function () {
       // export all required classes for deserialize JSON with "eval".
       // "eval" code didn't sees imported class or code
       //
@@ -72592,16 +72593,9 @@ $(window).load(function () {
       $(".loader").fadeOut(500, function () {
         $(this).remove();
       });
-    }).fail(function () {
-      if (arguments[0].readyState === 0) {
-        //script failed to load
-        console.log("failed to load script");
-      } else {
-        //script loaded but failed to parse
-        console.log("failed to parse loaded script");
-        alert(arguments[2].toString());
-      }
-    });
+    };
+
+    document.head.appendChild(s);
   });
   (0,split_js__WEBPACK_IMPORTED_MODULE_4__["default"])(['#paletteHeader', '#paletteElementsScroll'], {
     gutterSize: 10,

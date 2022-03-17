@@ -70,11 +70,9 @@ $(window).load(function () {
     let global = require("./global")
     console.log(global)
     for (let k in global.default) window[k] = global[k];
-
-    // we must load the "shape/index.js" in the global scope.
-    //
-    $.getScript(conf.shapes.url + "index.js", function () {
-
+    var s = document.createElement("script");
+    s.setAttribute("src",conf.shapes.url + "index.js");
+    s.onload = function(){
       // export all required classes for deserialize JSON with "eval".
       // "eval" code didn't sees imported class or code
       //
@@ -82,18 +80,10 @@ $(window).load(function () {
       app.init(permissions)
       require("./hardware").init(socket)
       inlineSVG.init()
-
       $(".loader").fadeOut(500, function() { $(this).remove(); })
-    }).fail(function () {
-      if (arguments[0].readyState === 0) {
-        //script failed to load
-        console.log("failed to load script")
-      } else {
-        //script loaded but failed to parse
-        console.log("failed to parse loaded script")
-        alert(arguments[2].toString());
-      }
-    });
+    }
+    document.head.appendChild(s);
+
   });
 
 
