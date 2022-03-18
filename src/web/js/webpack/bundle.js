@@ -2196,7 +2196,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var AppSwitch = /*#__PURE__*/_createClass(function AppSwitch(permissions, conf) {
   _classCallCheck(this, AppSwitch);
 
-  var appSwitchButtons = $(" \n            <label class=\"dropdown\" >\n\n                <span class=\"image-button\"  data-toggle=\"dropdown\">\n                  <img  src=\"../common/images/toolbar_app_switch.svg\"/>\n                </span>\n\n                <ul class=\"dropdown-menu\" role=\"menu\" >\n                    <form class=\"form-horizontal\" role=\"form\">\n\n                      <label class=\"applicationSwitchHome image-button\">\n                        <img src=\"../common/images/app_home.svg\"/>\n                        <div>Information<br>&nbsp;</div>\n                      </label>\n\n                      <label class=\"applicationSwitchSimulator image-button\">\n                        <img src=\"../common/images/app_simulator.svg\"/>\n                        <div>Circuit<br>Simulator</div>\n                      </label>\n\n                      <label class=\"applicationSwitchAuthor image-button\" >\n                        <img src=\"../common/images/app_lessons.svg\"/>\n                        <div>Lesson<br>Author</div>\n                      </label>\n\n                      <label class=\"applicationSwitchDesigner image-button\" >\n                        <img src=\"../common/images/app_designer.svg\"/>\n                        <div>Shape<br>Designer</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchUser image-button\" >\n                        <img src=\"../common/images/app_user.svg\"/>\n                        <div>User<br>Management</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchGroups image-button\" >\n                        <img src=\"../common/images/app_groups.svg\"/>\n                        <div>My Groups<br>&nbsp;</div>\n                      </label>\n                      \n                    </form>\n                </ul>   \n                         \n         </span>\n    ");
+  var appSwitchButtons = $(" \n            <label class=\"dropdown\" >\n\n                <span class=\"image-button\"  data-toggle=\"dropdown\">\n                  <img  src=\"../_common/images/toolbar_app_switch.svg\"/>\n                </span>\n\n                <ul class=\"dropdown-menu\" role=\"menu\" >\n                    <form class=\"form-horizontal\" role=\"form\">\n\n                      <label class=\"applicationSwitchHome image-button\">\n                        <img src=\"../_common/images/app_home.svg\"/>\n                        <div>Information<br>&nbsp;</div>\n                      </label>\n\n                      <label class=\"applicationSwitchSimulator image-button\">\n                        <img src=\"../_common/images/app_simulator.svg\"/>\n                        <div>Circuit<br>Simulator</div>\n                      </label>\n\n                      <label class=\"applicationSwitchAuthor image-button\" >\n                        <img src=\"../_common/images/app_lessons.svg\"/>\n                        <div>Lesson<br>Author</div>\n                      </label>\n\n                      <label class=\"applicationSwitchDesigner image-button\" >\n                        <img src=\"../_common/images/app_designer.svg\"/>\n                        <div>Shape<br>Designer</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchUser image-button\" >\n                        <img src=\"../_common/images/app_user.svg\"/>\n                        <div>User<br>Management</div>\n                      </label>\n                      \n                      <label class=\"applicationSwitchGroups image-button\" >\n                        <img src=\"../_common/images/app_groups.svg\"/>\n                        <div>My Groups<br>&nbsp;</div>\n                      </label>\n                      \n                    </form>\n                </ul>   \n                         \n         </span>\n    ");
   $(".applicationSwitch").prepend(appSwitchButtons);
   $(".applicationSwitchDesigner").off("click").on("click", function () {
     _DesignerDialog__WEBPACK_IMPORTED_MODULE_0__["default"].show(conf);
@@ -2471,7 +2471,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MarkerFigure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MarkerFigure */ "./common/js/MarkerFigure.js");
 
 
-var locator = (__webpack_require__(/*! ./PortDecorationCenterLocator */ "./common/js/PortDecorationCenterLocator.js")["default"]);
+var locator = __webpack_require__(/*! ./PortDecorationCenterLocator */ "./common/js/PortDecorationCenterLocator.js");
 
 var growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy();
 growPolicy.growFactor = 1.5;
@@ -2620,7 +2620,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var locator = (__webpack_require__(/*! ./PortDecorationCenterLocator */ "./common/js/PortDecorationCenterLocator.js")["default"]);
+var locator = __webpack_require__(/*! ./PortDecorationCenterLocator */ "./common/js/PortDecorationCenterLocator.js");
 
 var growPolicy = new draw2d.policy.port.IntrusivePortsFeedbackPolicy();
 growPolicy.growFactor = 1.5;
@@ -2791,7 +2791,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var inputPrompt = (__webpack_require__(/*! ./InputPrompt */ "./common/js/InputPrompt.js")["default"]);
+var inputPrompt = __webpack_require__(/*! ./InputPrompt */ "./common/js/InputPrompt.js");
 
 var Files = /*#__PURE__*/function () {
   /**
@@ -2803,7 +2803,7 @@ var Files = /*#__PURE__*/function () {
     _classCallCheck(this, Files);
 
     $("#files_tab a").on("click", this.onShow);
-    $("body").append(" \n        <script id=\"filesTemplate\" type=\"text/x-jsrender\">\n        <div class=\"fileOperations\">\n            <div data-folder=\"{{folder}}\" class='fileOperationsFolderAdd   fa fa-plus' > Folder</div>\n            <div data-folder=\"{{folder}}\" class='fileOperationsDocumentAdd fa fa-plus' > Document</div>\n        </div>\n        <div>Folder: {{folder}}</div>\n        <ul class=\"list-group col-lg-10 col-md-10 col-xs-10 \">\n        {{#files}}\n          <li class=\"list-group-item\"  \n                  data-scope=\"{{scope}}\"  \n                  data-type=\"{{type}}\"  \n                  data-delete=\"{{delete}}\" \n                  data-update=\"{{update}}\" \n                  data-folder=\"{{folder}}\" \n                  data-title=\"{{title}}\" \n                  data-name=\"{{folder}}{{name}}\"\n                  >\n            <div class=\"media thumb\">\n               {{#dir}}\n                  <a class=\"media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\"  src=\"../common/images/files_folder{{back}}.svg\">\n                  </div>\n                  </a>\n               {{/dir}}\n               {{^dir}}\n                  <a class=\"thumbnail media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\" src=\"{{image}}\">\n                  </div>\n                  </a>\n               {{/dir}}\n              <div class=\"media-body\">\n                <h4 class=\"media-heading\">{{title}}</h4>\n                {{#delete}}\n                    <div class=\"deleteIcon fa fa-trash-o\" data-toggle=\"confirmation\" ></div>\n                {{/delete}}\n              </div>\n            </div>\n          </li>\n        {{/files}}\n        </ul>\n        </script>\n    ");
+    $("body").append(" \n        <script id=\"filesTemplate\" type=\"text/x-jsrender\">\n        <div class=\"fileOperations\">\n            <div data-folder=\"{{folder}}\" class='fileOperationsFolderAdd   fa fa-plus' > Folder</div>\n            <div data-folder=\"{{folder}}\" class='fileOperationsDocumentAdd fa fa-plus' > Document</div>\n        </div>\n        <div>Folder: {{folder}}</div>\n        <ul class=\"list-group col-lg-10 col-md-10 col-xs-10 \">\n        {{#files}}\n          <li class=\"list-group-item\"  \n                  data-scope=\"{{scope}}\"  \n                  data-type=\"{{type}}\"  \n                  data-delete=\"{{delete}}\" \n                  data-update=\"{{update}}\" \n                  data-folder=\"{{folder}}\" \n                  data-title=\"{{title}}\" \n                  data-name=\"{{folder}}{{name}}\"\n                  >\n            <div class=\"media thumb\">\n               {{#dir}}\n                  <a class=\"media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\"  src=\"../_common/images/files_folder{{back}}.svg\">\n                  </div>\n                  </a>\n               {{/dir}}\n               {{^dir}}\n                  <a class=\"thumbnail media-left\">\n                  <div style=\"width: 48px; height: 48px\">\n                    <img style=\"width:100%; height:100%; object-fit: contain\" src=\"{{image}}\">\n                  </div>\n                  </a>\n               {{/dir}}\n              <div class=\"media-body\">\n                <h4 class=\"media-heading\">{{title}}</h4>\n                {{#delete}}\n                    <div class=\"deleteIcon fa fa-trash-o\" data-toggle=\"confirmation\" ></div>\n                {{/delete}}\n              </div>\n            </div>\n          </li>\n        {{/files}}\n        </ul>\n        </script>\n    ");
     this.conf = conf;
     this.app = app;
     this.render(conf, permissions);
@@ -2835,7 +2835,7 @@ var Files = /*#__PURE__*/function () {
     value: function render(conf, permissions) {
       var _this2 = this;
 
-      var storage = (__webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")["default"])(conf);
+      var storage = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")(conf);
 
       this.initTabs(permissions);
       this.initPane("user", "#userFiles", conf.backend.user, permissions, "");
@@ -2921,7 +2921,7 @@ var Files = /*#__PURE__*/function () {
   }, {
     key: "initPane",
     value: function initPane(scope, paneSelector, backendConf, permissions, initialPath) {
-      var storage = (__webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")["default"])(this.conf);
+      var storage = __webpack_require__(/*! ./BackendStorage */ "./common/js/BackendStorage.js")(this.conf);
 
       if (permissions.list === false) {
         return;
@@ -3905,7 +3905,7 @@ var Userinfo = /*#__PURE__*/function () {
     } else {
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("../userinfo").then(function (response) {
         _this.user = response.data;
-        var icon = _this.user.role === "admin" ? "../common/images/toolbar_admin.svg" : "../common/images/toolbar_user.svg";
+        var icon = _this.user.role === "admin" ? "../_common/images/toolbar_admin.svg" : "../_common/images/toolbar_user.svg";
         var role = _this.user.role === "admin" ? "(Administrator)" : "";
         $(".userinfo_toggler img").attr("src", icon);
         $(".userinfo_toggler .dropdown-menu").html(" \n              <div class=\"userContainer\">\n                <img  src=\"".concat(icon, "\"/>\n                <div>").concat(_this.user.displayName, "</div>\n                <div>").concat(role, "</div>\n                <button class=\"logoutButton\">Logout</button>\n              </div>\n          "));
