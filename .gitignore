@@ -1,4 +1,5 @@
 src/web/common
+src/web/js/webpack
 
 # Bower dependency directory (https://bower.io/)
 bower_components
