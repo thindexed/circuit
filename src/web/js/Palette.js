@@ -3,9 +3,6 @@ import Hogan from "hogan.js";
 import TreeView from "js-treeview";
 
 /**
- *
- * The **GraphicalEditor** is responsible for layout and dialog handling.
- *
  * @author Andreas Herz
  */
 
@@ -13,10 +10,9 @@ export default class Palette {
   /**
    * @constructor
    *
-   * @param {String} canvasId the id of the DOM element to use as paint container
+   * @param {Object} permissions The permissions of the current loggedin user
    */
   constructor(permissions) {
-
     $.getJSON(conf.shapes.url + "index.json", (data) => {
       conf.shapes.version = data[0].version
       let tmpl = Hogan.compile($("#shapeTemplate").html());
@@ -26,9 +22,7 @@ export default class Palette {
       })
 
       $("#paletteElements").html(html)
-
       this.buildTree(data)
-
 
       // Create the jQuery-Draggable for the palette -> canvas drag&drop interaction
       //
@@ -56,10 +50,13 @@ export default class Palette {
         })
     })
 
+    // Add an "loader" icon to a shape whenn the backend is calculating the thumbnail
     socket.on("shape:generating", (msg) => {
       $("div[data-file='" + msg.filePath + "'] ").addClass("spinner")
     })
 
+    // Update the shape thumbnail if the bakcend fineshed the calculation
+    //
     socket.on("shape:generated", (msg) => {
       $("div[data-file='" + msg.filePath + "'] ").removeClass("spinner")
       $("div[data-file='" + msg.filePath + "'] img").attr({src: conf.shapes.url + msg.imagePath + "?timestamp=" + new Date().getTime()})
@@ -119,7 +116,8 @@ export default class Palette {
     //
 
     new TreeView(tree, 'paletteFilter');
-    $("#paletteElements").shuffle()
+    $("#paletteElements").shuffle(true)
+    console.log("shuffle")
     $(".tree-leaf-content").on("click", (event) => {
       try {
         $(".tree-leaf-content").removeClass("selected")
@@ -129,8 +127,7 @@ export default class Palette {
         let $grid = $("#paletteElements");
 
         $grid.shuffle('shuffle', function ($el, shuffle) {
-          let text = $.trim($el.data("dir")).toLowerCase();
-          return text=== path
+          return $el.data("dir").trim().toLowerCase()===path
         });
 
         return false
@@ -139,5 +136,4 @@ export default class Palette {
       }
     })
   }
-
 }

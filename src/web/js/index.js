@@ -68,7 +68,6 @@ $(window).load(function () {
     // "eval" code didn't sees imported class or code
     //
     let global = require("./global")
-    console.log(global)
     for (let k in global.default) window[k] = global.default[k];
     var s = document.createElement("script");
     s.setAttribute("src",conf.shapes.url + "index.js");
@@ -83,7 +82,6 @@ $(window).load(function () {
       $(".loader").fadeOut(500, function() { $(this).remove(); })
     }
     document.head.appendChild(s);
-
   });
 
 
@@ -94,5 +92,4 @@ $(window).load(function () {
     cursor: 'row-resize',
     direction: 'vertical'
   })
-
 });

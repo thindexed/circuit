@@ -60,7 +60,7 @@ body {
           .paletteContainer {
             position:absolute;
             height: 100%;
-            width: @leftPaneWidth;
+            width: unit(@leftPaneWidth, px);
             padding: 0;
 
 
@@ -120,7 +120,7 @@ body {
             }
             #paletteElementsScroll {
               position: relative;
-              width: @leftPaneWidth - 2px;
+              width: unit(@leftPaneWidth - 2, px);
               margin: 0;
               padding: 0;
               top: 0;
@@ -147,7 +147,7 @@ body {
             right: 0;
             top:@toolbarHeight;
             bottom:0;
-            left: @leftPaneWidth;
+            left: unit(@leftPaneWidth, px);
             overflow: scroll;
             .canvas {
                 width:6000px;
