@@ -174,11 +174,15 @@ export default draw2d.Canvas.extend({
 
     // OneToOne Button
     //
-    $("#canvas_zoom_normal").on("click", () => setZoom(1.0))
+    $("#canvas_zoom_normal").on("click", () => {
+      setZoom(1.0)
+    })
 
     //ZoomOut Button and the callback
     //
-    $("#canvas_zoom_out").on("click", () => setZoom(_this.getZoom() * 0.8))
+    $("#canvas_zoom_out").on("click", () => { 
+      setZoom(this.getZoom() * 0.8)
+    })
 
     $("#statusWebUSB .help-link").on("click", () => new WebUSBHelpDialog().show())
 
