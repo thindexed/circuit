@@ -11,7 +11,6 @@ import checkElement from "../common/js/checkElement"
 import Palette from "./Palette"
 import View from "./View"
 import Files from "../common/js/FilesScreen"
-import Addons from "./view/AddonScreen"
 import conf from "./Configuration"
 import reader from "./io/Reader"
 import fileSave from "./dialog/FileSave"
@@ -40,7 +39,7 @@ class Application {
     this.palette = new Palette(permissions)
     this.view = new View("draw2dCanvas", permissions)
     this.filePane = new Files(this, conf, permissions.brains)
-    this.addonPane = new Addons(permissions)
+
     this.userinfo = new Userinfo(permissions, conf)
     this.indexPane = new AuthorPage("#home", "readme/en/circuit/Readme.sheet")
     this.appSwitch = new AppSwitch(permissions, conf)
