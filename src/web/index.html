@@ -4,6 +4,26 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0"/>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <script src="https://accounts.google.com/gsi/client" defer></script>
+    <script>
+      function onSignIn(googleUser) {
+        console.log(googleUser);
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      }
+    </script>
+
   <link rel="icon" type="./image/png"    href="../common/images/favicon_64x64.png" sizes="64x64">
   <link rel="icon" type="./image/png"    href="../common/images/favicon_48x48.png" sizes="48x48">
   <link rel="icon" type="./image/png"    href="../common/images/favicon_32x32.png" sizes="32x32">
@@ -29,6 +49,7 @@
 
 
 <body class="mousetrap" >
+
 <div id="layout">
 
 
@@ -99,7 +120,6 @@
               <div class="dropdown-menu" role="menu" >
               </div>
             </label>
-
           </span>
       </div>
 
@@ -220,7 +240,6 @@
             </label>
 
           </span>
-
 
           <div class="morph_btn play" id="simulationStartStop">
             <span>

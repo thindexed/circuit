@@ -20,7 +20,7 @@ module.exports = {
   },
   plugins: [
     new EventHooksPlugin({
-      'beforeRun': (compilation, done) => {
+      'initialize': (compilation, done) => {
         console.log('Copying source files to compiled')
         fs.copy(commonDir,  projectDir + '/common' , done);
       }
