@@ -1,9 +1,6 @@
 const path = require('path');
-const EventHooksPlugin = require('event-hooks-webpack-plugin');
-const fs = require('fs-extra')
 
 const projectDir = path.resolve(__dirname)
-const commonDir =  path.resolve(__dirname+"../../../common/src/web/")
 
 module.exports = {
   entry: projectDir + '/js/index.js',
@@ -15,17 +12,9 @@ module.exports = {
     filename: "bundle.js"
   },
   resolve: {
-    modules: [projectDir + '/node_modules', projectDir + '/src/', commonDir],
+    modules: [projectDir + '/node_modules', projectDir + '/src/'],
     extensions: ['.json', '.js', '.css']
   },
-  plugins: [
-    new EventHooksPlugin({
-      'initialize': (compilation, done) => {
-        console.log('Copying source files to compiled')
-        fs.copy(commonDir,  projectDir + '/common' , done);
-      }
-    })
-  ],
   module: {
     rules: [
       {
