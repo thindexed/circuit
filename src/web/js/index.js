@@ -50,7 +50,8 @@ import conf from './Configuration'
 
 
 $(window).load(function () {
-  
+  document.title = conf.appName
+
   socket = io( { path: '/socket.io'})
 
   socket.on("shape:updated", () => {
