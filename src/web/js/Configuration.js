@@ -1,7 +1,8 @@
 //
 export default {
   fileSuffix: ".brain",
-  appName: "Brainbox Simulator",
+  fileNew: "NewCircuit",
+  appName: "Thindexed Simulator",
   loginRedirect: "circuit",
 
   backend: {
@@ -30,11 +31,6 @@ export default {
       save:           `../api/global/brain/save`,
       folder:         `../api/global/brain/folder`
     }
-  },
-
-  updates: {
-    url: "../api/updates",
-    shapes: "../api/updates/shapes"
   },
 
   shapes: {

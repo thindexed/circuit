@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack build",
     "watch": "webpack watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "webpack serve --allowed-hosts all --port 8080 --static-directory .  --static-watch  --watch-files ./**/*"
   },
   "keywords": [],
   "author": "Andreas Herz <a.herz@freegroup.de> (http://draw2d.org/)",
@@ -34,7 +34,8 @@
     "style-loader": "^3.3.1",
     "svg-inline-loader": "^0.8.2",
     "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
     "axios": "^0.26.1",
