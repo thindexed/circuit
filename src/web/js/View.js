@@ -27,6 +27,7 @@ import imgConnectionStatusFalse from "../images/status_index_false.svg"
 require("bootstrap-toggle/css/bootstrap-toggle.min.css")
 require("bootstrap-toggle/js/bootstrap-toggle.min")
 
+
 export default draw2d.Canvas.extend({
 
   init: function (id, permissions) {
