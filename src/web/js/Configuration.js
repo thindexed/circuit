@@ -5,6 +5,10 @@ export default {
   appName: "Thindexed Simulator",
   loginRedirect: "circuit",
 
+  fileScreen: {
+    title: "Circuit Library"
+  },
+
   backend: {
 
     shared: {
