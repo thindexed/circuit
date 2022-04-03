@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
       - name: circuit
-        image: docker.io/freegroup/thindexed-circuit:0.1.0-146
+        image: docker.io/freegroup/thindexed-circuit:0.1.0-149
