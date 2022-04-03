@@ -6,7 +6,9 @@ export default {
   loginRedirect: "circuit",
 
   fileScreen: {
-    title: "Circuit Library"
+    title: "Circuit Library",
+    addFolderButton: "Folder",
+    addFileButton: "Circuit"
   },
 
   backend: {
