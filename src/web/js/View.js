@@ -1,7 +1,4 @@
 /**
- *
- * The **GraphicalEditor** is responsible for layout and dialog handling.
- *
  * @author Andreas Herz
  */
 import ProbeWindow from "./ProbeWindow"
@@ -31,8 +28,6 @@ require("bootstrap-toggle/js/bootstrap-toggle.min")
 export default draw2d.Canvas.extend({
 
   init: function (id, permissions) {
-    let _this = this
-
     this._super(id, 6000, 6000)
 
     this.probeWindow = new ProbeWindow(this)
@@ -58,7 +53,6 @@ export default draw2d.Canvas.extend({
     let router = new ConnectionRouter()
     router.abortRoutingOnFirstVertexNode = false
     let createConnection = this.createConnection = (sourcePort, targetPort) => {
-
       let c = new Connection({
         color: "#000000",
         router: router,
@@ -167,7 +161,7 @@ export default draw2d.Canvas.extend({
       this.scrollTo((bb.y / newZoom - c.height() / 2), (bb.x / newZoom - c.width() / 2))
     }
 
-    //  ZoomIn Button and the callbacks
+    // ZoomIn Button and the callbacks
     //
     $("#canvas_zoom_in").on("click", () => {
       setZoom(this.getZoom() * 1.2)
@@ -191,7 +185,6 @@ export default draw2d.Canvas.extend({
     hardware.arduino.on("connect", this.hardwareChanged.bind(this))
     hardware.raspi.on("disconnect", this.hardwareChanged.bind(this))
     hardware.raspi.on("connect", this.hardwareChanged.bind(this))
-
 
     let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
     let isHTTPS = location.protocol === 'https:'
@@ -231,15 +224,14 @@ export default draw2d.Canvas.extend({
       this.getCommandStack().commitTransaction()
     }
 
-    $(".toolbar").delegate("#editDelete:not(.disabled)", "click", this.deleteSelectionCallback)
+    $(".toolbar").on("click", "#editDelete:not(.disabled)", this.deleteSelectionCallback)
     Mousetrap.bindGlobal(['del', 'backspace'], this.deleteSelectionCallback)
 
-
-    $(".toolbar").delegate("#editUndo:not(.disabled)", "click", () => {
+    $(".toolbar").on("click", "#editUndo:not(.disabled)", () => {
       this.getCommandStack().undo()
     })
 
-    $(".toolbar").delegate("#editRedo:not(.disabled)", "click", () => {
+    $(".toolbar").on("click","#editRedo:not(.disabled)",  () => {
       this.getCommandStack().redo()
     })
 
@@ -254,12 +246,13 @@ export default draw2d.Canvas.extend({
     this.on("select", (emitter, event) => {
       $("#editDelete").removeClass("disabled")
     })
+
     this.on("unselect", (emitter, event) => {
       $("#editDelete").addClass("disabled")
     })
 
-    this.on("contextmenu", function (emitter, event) {
-      let figure = _this.getBestFigure(event.x, event.y)
+    this.on("contextmenu", (emitter, event) => {
+      let figure = this.getBestFigure(event.x, event.y)
 
       // a connection provides its own context menu
       //
@@ -271,18 +264,17 @@ export default draw2d.Canvas.extend({
       }
 
       if (figure !== null) {
-        let x = event.x
-        let y = event.y
+        let {x,y} = event
 
         let items = {}
 
         if (figure instanceof CircuitFigure) {
-          if(_this.permissions.shapes.update) {
+          if(this.permissions.shapes.global.update) {
             items = {
               "label": {name: "Attach Label", icon: "x ion-ios-pricetag-outline"},
               "delete": {name: "Delete", icon: "x ion-ios-close-outline"},
               "sep1": "---------",
-              "design": {name: "Edit Design", icon: "x ion-ios-compose-outline"},
+              "design": {name: "Open in Component Editor", icon: "x ion-ios-compose-outline"},
               "code": {name: "Show JS Code", icon: "x ion-code"},
               "help": {name: "Description", icon: "x ion-ios-information-outline"}
             }
@@ -292,7 +284,7 @@ export default draw2d.Canvas.extend({
               "label": {name: "Attach Label", icon: "x ion-ios-pricetag-outline"},
               "delete": {name: "Delete", icon: "x ion-ios-close-outline"},
               "sep1": "---------",
-              "design": {name: "Show Design", icon: "x ion-ios-compose-outline"},
+              "design": {name: "Ope in Component Editor (readonly)", icon: "x ion-ios-compose-outline"},
               "code": {name: "Show JS Code", icon: "x ion-code"},
               "help": {name: "Description", icon: "x ion-ios-information-outline"}
             }
@@ -324,7 +316,7 @@ export default draw2d.Canvas.extend({
               $.contextMenu('destroy')
             }
           },
-          callback: $.proxy(function (key, options) {
+          callback: (key, options) => {
             switch (key) {
               case "code":
                 new CodeDialog().show(figure)
@@ -346,14 +338,13 @@ export default draw2d.Canvas.extend({
                 markdownDialog.show(conf, figure)
                 break
               case "delete":
-                _this.getCommandStack().execute(new draw2d.command.CommandDelete(figure))
+                this.getCommandStack().execute(new draw2d.command.CommandDelete(figure))
                 break
               default:
                 figure.executeContextMenuEntry(key, x, y)
                 break
             }
-
-          }, this),
+          },
           x: x,
           y: y,
           items: items
