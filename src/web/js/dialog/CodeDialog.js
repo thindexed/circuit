@@ -9,8 +9,6 @@ export default class CodeDialog {
   }
 
   show(figure) {
-
-    // let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
     let baseName = figure.NAME.replaceAll("_","/")
     let pathToCustom = conf.shapes.url + baseName + ".custom"
     $.get(pathToCustom, function (content) {
