@@ -15,7 +15,8 @@ class Dialog {
   }
 
   show(conf, figure) {
-    let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
+    // let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
+    let baseName = figure.NAME.replaceAll("_","/")
     let pathToMD = conf.shapes.url + baseName + ".md"
     $.get(pathToMD,  (content) => {
       let version = figure.VERSION
@@ -34,19 +35,12 @@ class Dialog {
       $('#markdownDialog').modal('show')
 
       $("#markdownDialog .editButton").off("click").on("click", () => {
-        let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
-        let pathToDesign = conf.designer.url
-          + "?timestamp=" + new Date().getTime()
-          + "&global=" + baseName + ".shape"
+        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape&tutorial=code`
         window.open(pathToDesign, "designer")
       })
 
       $("#markdownDialog .editButtonGuided").off("click").on("click", () => {
-        let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
-        let pathToDesign = conf.designer.url
-          + "?timestamp=" + new Date().getTime()
-          + "&global=" + baseName + ".shape"
-          + "&tutorial=markdown"
+        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape&tutorial=code&tutorial=markdown`
         window.open(pathToDesign, "designer")
       })
     })

@@ -9,7 +9,9 @@ export default class CodeDialog {
   }
 
   show(figure) {
-    let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
+
+    // let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
+    let baseName = figure.NAME.replaceAll("_","/")
     let pathToCustom = conf.shapes.url + baseName + ".custom"
     $.get(pathToCustom, function (content) {
       $('#codePreviewDialog .prettyprint').text(content)
@@ -17,21 +19,15 @@ export default class CodeDialog {
       prettyPrint()
       $('#codePreviewDialog').modal('show')
       $("#codePreviewDialog .editButton").off("click").on("click", () => {
-        let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
-        let pathToDesign = conf.designer.url
-          + "?timestamp=" + new Date().getTime()
-          + "&global=" + baseName + ".shape"
+        let baseName = figure.NAME.replaceAll("_","/")
+        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape`
         window.open(pathToDesign, "designer")
       })
       $("#codePreviewDialog .editButtonGuided").off("click").on("click", () => {
-        let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
-        let pathToDesign = conf.designer.url
-          + "?timestamp=" + new Date().getTime()
-          + "&global=" + baseName + ".shape"
-          + "&tutorial=code"
+        let baseName = figure.NAME.replaceAll("_","/")
+        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape&tutorial=code`
         window.open(pathToDesign, "designer")
       })
-
     })
   }
 }
