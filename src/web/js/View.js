@@ -352,6 +352,7 @@ export default draw2d.Canvas.extend({
       }
     })
 
+    
     // hide the figure configuration dialog if the user clicks inside the canvas
     //
     this.on("click", () => {
