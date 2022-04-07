@@ -144,6 +144,9 @@ class Application {
           })
         return content
       })
+      .catch (exc => {
+        console.log(exc)
+      })
   }
 
   getParam(name) {
