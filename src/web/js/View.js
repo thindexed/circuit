@@ -494,7 +494,7 @@ export default draw2d.Canvas.extend({
     })
 
     this.getFigures().each( (index, shape) => {
-      shape.onStart(this.simulationContext)
+      shape.onStart?.(this.simulationContext)
     })
 
     this._calculate()
@@ -520,7 +520,7 @@ export default draw2d.Canvas.extend({
     this.installEditPolicy(this.coronaFeedback)
 
     this.getFigures().each( (index, shape) =>{
-      shape.onStop(this.simulationContext)
+      shape.onStop?.(this.simulationContext)
     })
 
     $("#simulationStartStop")
@@ -536,7 +536,7 @@ export default draw2d.Canvas.extend({
     // call the "calculate" method if given to calculate the output-port values
     //
     this.getFigures().each((i, figure) => {
-      figure.calculate(this.simulationContext)
+      figure.calculate?.(this.simulationContext)
     })
 
     // transport the value from outputPort to inputPort

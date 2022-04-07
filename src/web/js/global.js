@@ -1,4 +1,5 @@
 import inlineSVG from "../common/js/inlineSVG"
+import DecoratedHybridPort from "../common/js/DecoratedHybridPort"
 import DecoratedInputPort from "../common/js/DecoratedInputPort"
 import DecoratedOutputPort from "../common/js/DecoratedOutputPort"
 import MarkerFigure from "../common/js/MarkerFigure"
@@ -40,6 +41,7 @@ export default {
   hardware,
   DecoratedInputPort,
   DecoratedOutputPort,
+  DecoratedHybridPort,
   MarkerFigure,
   MarkerStateAFigure,
   MarkerStateBFigure,

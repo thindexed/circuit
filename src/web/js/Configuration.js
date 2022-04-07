@@ -2,40 +2,40 @@
 export default {
   fileSuffix: ".brain",
   fileNew: "NewCircuit",
-  appName: "Thindexed Simulator",
+  appName: "Simulator",
   loginRedirect: "circuit",
 
   fileScreen: {
     title: "Circuit Library",
-    addFolderButton: "Folder",
+    addFolderButton: "Library",
     addFileButton: "Circuit"
   },
 
   backend: {
 
     shared: {
-      get:    file  => `../api/shared/brain/get?filePath=${file}`,
-      save:            `../api/shared/brain/save`,
+      get:    file  => `../brains/shared/get?filePath=${file}`,
+      save:            `../brains/shared/save`,
     },
 
     user: {
-      list:   path => `../api/user/brain/list?path=${path}`,
-      get:    file => `../api/user/brain/get?filePath=${file}`,
-      image:  file => `../api/user/brain/image?filePath=${file}`,
-      delete:         `../api/user/brain/delete`,
-      rename:         `../api/user/brain/rename`,
-      save:           `../api/user/brain/save`,
-      folder:         `../api/user/brain/folder`
+      list:   path => `../brains/user/list?path=${path}`,
+      get:    file => `../brains/user/get?filePath=${file}`,
+      image:  file => `../brains/user/image?filePath=${file}`,
+      delete:         `../brains/user/delete`,
+      rename:         `../brains/user/rename`,
+      save:           `../brains/user/save`,
+      folder:         `../brains/user/folder`
     },
 
     global:{
-      list:   path => `../api/global/brain/list?path=${path}`,
-      get:    file => `../api/global/brain/get?filePath=${file}`,
-      image:  file => `../api/global/brain/image?filePath=${file}`,
-      delete:         `../api/global/brain/delete`,
-      rename:         `../api/global/brain/rename`,
-      save:           `../api/global/brain/save`,
-      folder:         `../api/global/brain/folder`
+      list:   path => `../brains/global/list?path=${path}`,
+      get:    file => `../brains/global/get?filePath=${file}`,
+      image:  file => `../brains/global/image?filePath=${file}`,
+      delete:         `../brains/global/delete`,
+      rename:         `../brains/global/rename`,
+      save:           `../brains/global/save`,
+      folder:         `../brains/global/folder`
     }
   },
 
