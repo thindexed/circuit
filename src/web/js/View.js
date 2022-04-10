@@ -553,6 +553,7 @@ export default draw2d.Canvas.extend({
       setTimeout(this.animationFrameFunc, this.timerBase)
     }
 
+    
     this.probeWindow.tick(this.timerBase)
   },
 
