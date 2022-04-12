@@ -19,7 +19,10 @@ OCIIMAGE="$OCIIMAGE:$VERSION"
 echo "Docker Image: $OCIIMAGE"
 echo "Using Domain: $DOMAIN"
 
+
+cp -R ./common/src/web/ ./src/web/common/
 cd src
+
 
 echo
 echo 'Building new image'
