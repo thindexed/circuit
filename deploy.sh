@@ -21,8 +21,10 @@ echo "Using Domain: $DOMAIN"
 
 
 cp -R ./common/src/web/ ./src/web/common/
-cd src
+cd src/web
 
+npm run build
+cd ..
 
 echo
 echo 'Building new image'
