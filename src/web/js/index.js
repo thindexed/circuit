@@ -72,9 +72,9 @@ $(window).load(function () {
     // "eval" code didn't sees imported class or code
     //
     let global = require("./global")
-    for (let k in global.default) window[k] = global.default[k];
-    var s = document.createElement("script");
-    s.setAttribute("src",conf.shapes.url + "index.js");
+    for (let k in global.default) window[k] = global.default[k]
+    var s = document.createElement("script")
+    s.setAttribute("src",conf.shapes.jsUrl)
     s.onload = function(){
       // export all required classes for deserialize JSON with "eval".
       // "eval" code didn't sees imported class or code

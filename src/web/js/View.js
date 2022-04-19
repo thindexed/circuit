@@ -449,18 +449,20 @@ export default draw2d.Canvas.extend({
    * @private
    **/
   onDrop: function (droppedDomNode, x, y, shiftKey, ctrlKey) {
-    let type = $(droppedDomNode).data("shape")
+    let name = $(droppedDomNode).data("name")
     let file = $(droppedDomNode).data("file")
+    let scope = $(droppedDomNode).data("scope")
     let figure = new draw2d.shape.basic.Label({
-      text: `Unable to load shape '${type}'`,
+      text: `Unable to load shape '${name}'`,
       color: "#ff0000"
     })
     try {
-      figure = eval("new " + type + "();") // jshint ignore:line
+      figure = eval("new " + name + "();") // jshint ignore:line
 
       // required to calculate the filepath for markdown/js/shape
       //
       figure.attr("userData.file", file)
+      figure.attr("userData.scope", scope)
     }
     catch(exc){
       console.log(exc)

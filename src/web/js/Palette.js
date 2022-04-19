@@ -13,11 +13,12 @@ export default class Palette {
    * @param {Object} permissions The permissions of the current loggedin user
    */
   constructor(permissions) {
-    $.getJSON(conf.shapes.url + "index.json", (data) => {
+    $.getJSON(conf.shapes.jsonUrl, (data) => {
       conf.shapes.version = data[0].version
       let tmpl = Hogan.compile($("#shapeTemplate").html());
+      console.log( conf.shapes.imageUrl)
       let html = tmpl.render({
-        shapesUrl: conf.shapes.url,
+        imageUrl: conf.shapes.imageUrl,
         shapes: data
       })
 
@@ -59,7 +60,7 @@ export default class Palette {
     //
     socket.on("shape:generated", (msg) => {
       $("div[data-file='" + msg.filePath + "'] ").removeClass("spinner")
-      $("div[data-file='" + msg.filePath + "'] img").attr({src: conf.shapes.url + msg.imagePath + "?timestamp=" + new Date().getTime()})
+      $("div[data-file='" + msg.filePath + "'] img").attr({src: conf.shapes.imageUrl + msg.imagePath})
     })
   }
 
