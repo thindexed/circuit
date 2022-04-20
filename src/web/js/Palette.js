@@ -14,9 +14,7 @@ export default class Palette {
    */
   constructor(permissions) {
     $.getJSON(conf.shapes.jsonUrl, (data) => {
-      conf.shapes.version = data[0].version
       let tmpl = Hogan.compile($("#shapeTemplate").html());
-      console.log( conf.shapes.imageUrl)
       data = data.map( shape=> {
         shape.imageUrl = conf.shapes[shape.scope].image(shape.imagePath)
         return shape
@@ -125,11 +123,11 @@ export default class Palette {
         let target = $(event.currentTarget)
         target.addClass("selected")
         let path = target.data("item").path.toLowerCase()
-        let $grid = $("#paletteElements");
+        let $grid = $("#paletteElements")
 
         $grid.shuffle('shuffle', function ($el, shuffle) {
           return $el.data("dir").trim().toLowerCase()===path
-        });
+        })
 
         return false
       } catch (e) {
