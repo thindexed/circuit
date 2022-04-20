@@ -17,10 +17,11 @@ export default class Palette {
       conf.shapes.version = data[0].version
       let tmpl = Hogan.compile($("#shapeTemplate").html());
       console.log( conf.shapes.imageUrl)
-      let html = tmpl.render({
-        imageUrl: conf.shapes.imageUrl,
-        shapes: data
+      data = data.map( shape=> {
+        shape.imageUrl = conf.shapes[shape.scope].image(shape.imagePath)
+        return shape
       })
+      let html = tmpl.render({ shapes: data })
 
       $("#paletteElements").html(html)
       this.buildTree(data)
