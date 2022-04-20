@@ -43,10 +43,10 @@ export default {
     jsUrl:     "../shapes/index.js",
     jsonUrl:   "../shapes/index.json",
     user: {
-      image:  file => `../shapes/user/image?filePath=${file}`,
+      image:  file => `../shapes/user/get?filePath=${file}`,
     },
     global :{
-      image:  file => `../shapes/global/image?filePath=${file}`,
+      image:  file => `../shapes/global/get?filePath=${file}`,
     },
     version: "0.0.0" // updated during after loading from the index.json file
   }
