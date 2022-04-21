@@ -15,7 +15,6 @@ import conf from "./Configuration"
 import reader from "./io/Reader"
 import fileSave from "./dialog/FileSave"
 import shareDialog from "../common/js/LinkShareDialog";
-import writer from "./io/Writer";
 import AuthorPage from "../common/js/AuthorPage";
 import AppSwitch from "../common/js/AppSwitch";
 import storageFactory from '../common/js/BackendStorage'
