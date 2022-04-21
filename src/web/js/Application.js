@@ -171,15 +171,13 @@ class Application {
 
 
   fileShare() {
-    this.view.setCurrentSelection(null)
-    writer.marshal(this.view, json => {
-      storage.saveFile(json, "unused", "shared")
-        .then(( response) => {
-          let data = response.data
-          let file = data.filePath
-          shareDialog.show(file)
-        })
-    })
+    let filePath = this.currentFile.name
+    let scope = this.currentFile.scope
+    storage.shareFile(filePath,scope)
+      .then(( response) => {
+        let file = response.data.filePath
+        shareDialog.show(file)
+      })
   }
 
   fileSave(){

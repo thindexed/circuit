@@ -14,8 +14,7 @@ export default {
   backend: {
 
     shared: {
-      get:    file  => `../brains/shared/get?filePath=${file}`,
-      save:            `../brains/shared/save`,
+      get:    file  => `../brains/shared/get?filePath=${file}`
     },
 
     user: {
@@ -24,6 +23,7 @@ export default {
       image:  file => `../brains/user/image?filePath=${file}`,
       delete:         `../brains/user/delete`,
       rename:         `../brains/user/rename`,
+      share:  file => `../brains/user/share?filePath=${file}`,
       save:           `../brains/user/save`,
       folder:         `../brains/user/folder`
     },
@@ -34,6 +34,7 @@ export default {
       image:  file => `../brains/global/image?filePath=${file}`,
       delete:         `../brains/global/delete`,
       rename:         `../brains/global/rename`,
+      share:  file=>  `../brains/global/share?filePath=${file}`,
       save:           `../brains/global/save`,
       folder:         `../brains/global/folder`
     }
