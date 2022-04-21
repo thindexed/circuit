@@ -27,18 +27,6 @@ export default {
    */
   init: function (s) {
     socket = s
-    // GPIO from RasperyPi
-    //
-    socket.on("gpio:change", msg => {
-      values[msg.pin] = !!parseInt(msg.value)
-    })
-
-    socket.on('disconnect', () => {
-      this.raspi.emit("disconnect")
-    })
-    socket.on('connect', () => {
-      this.raspi.emit("connect")
-    })
 
     // Init the WEBUSB stuff
     //
@@ -165,38 +153,6 @@ export default {
 
     get connected() {
       return usbPort !== null
-    }
-  },
-
-
-  raspi: new class extends EventEmitter {
-    set(pin, value) {
-      socket.emit('gpio:set', {
-        pin: pin,
-        value: value
-      })
-    }
-
-    mode(pin, value) {
-      socket.emit('gpio:mode', {
-        pin: pin,
-        mode: value
-      })
-    }
-
-    pwm(pin, value) {
-      socket.emit('gpio:pwm', {
-        pin: pin,
-        value: value
-      })
-    }
-
-    get(pin) {
-      return values[pin]
-    }
-
-    get connected() {
-      return socket && socket.connected
     }
   },
 

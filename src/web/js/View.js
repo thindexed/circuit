@@ -183,8 +183,6 @@ export default draw2d.Canvas.extend({
 
     hardware.arduino.on("disconnect", this.hardwareChanged.bind(this))
     hardware.arduino.on("connect", this.hardwareChanged.bind(this))
-    hardware.raspi.on("disconnect", this.hardwareChanged.bind(this))
-    hardware.raspi.on("connect", this.hardwareChanged.bind(this))
 
     let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
     let isHTTPS = location.protocol === 'https:'
@@ -595,18 +593,14 @@ export default draw2d.Canvas.extend({
     let elements = this.getFigures().clone().asArray()
     elements = elements.filter(element => element.getRequiredHardware)
     let arduinoRequired = elements.reduce((sum, cur) => sum || cur.getRequiredHardware().arduino, false)
-    let raspiRequired = elements.reduce((sum, cur) => sum || cur.getRequiredHardware().raspi, false)
-    let raspiConnected = hardware.raspi.connected
     let arduinoConnected = hardware.arduino.connected
 
     // Det the status of top button for the pulldown menu.
     //
-    if (arduinoRequired === false && raspiRequired === false) {
+    if (arduinoRequired === false) {
       $("#editConnections").attr("src", imgConnectionStatusNeutral)
     } else {
-      let error =
-        (raspiRequired === true && raspiConnected === false) ||
-        (arduinoRequired === true && arduinoConnected === false)
+      let error = (arduinoRequired === true && arduinoConnected === false)
       $("#editConnections").attr("src", error ? imgConnectionStatusFalse : imgConnectionStatusTrue)
     }
 
@@ -616,14 +610,6 @@ export default draw2d.Canvas.extend({
       $("#statusWebUSB").removeClass("error")
     } else {
       $("#statusWebUSB").addClass("error")
-    }
-
-    // set the status indicator for the arduino webusb connections
-    //
-    if (raspiConnected) {
-      $("#statusRaspi").removeClass("error")
-    } else {
-      $("#statusRaspi").addClass("error")
     }
   },
 
