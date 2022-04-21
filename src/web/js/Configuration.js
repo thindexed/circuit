@@ -14,7 +14,7 @@ export default {
   backend: {
 
     shared: {
-      get:    file  => `../brains/shared/get?filePath=${file}`
+      get:    file  => `../brains/shared/get?sha=${file}`
     },
 
     user: {
