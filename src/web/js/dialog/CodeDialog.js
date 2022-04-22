@@ -9,22 +9,22 @@ export default class CodeDialog {
   }
 
   show(figure) {
-    let baseName = figure.NAME.replaceAll("_","/")
-    let pathToCustom = conf.shapes.url + baseName + ".custom"
-    $.get(pathToCustom, function (content) {
+    let scope = figure.attr("userData.scope")
+    let shapeName = figure.attr("userData.file")
+    let customName = shapeName.replace(/\.shape$/, ".custom")
+    let contentUrl = conf.shapes[scope].file(customName)
+    $.get(contentUrl, function (content) {
       $('#codePreviewDialog .prettyprint').text(content)
       $('#codePreviewDialog .prettyprint').removeClass("prettyprinted")
       prettyPrint()
       $('#codePreviewDialog').modal('show')
       $("#codePreviewDialog .editButton").off("click").on("click", () => {
-        let baseName = figure.NAME.replaceAll("_","/")
-        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape`
-        window.open(pathToDesign, "designer")
+        let designerUrl = `../designer?${scope}=${shapeName}`
+        window.open(designerUrl, "designer")
       })
       $("#codePreviewDialog .editButtonGuided").off("click").on("click", () => {
-        let baseName = figure.NAME.replaceAll("_","/")
-        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape&tutorial=code`
-        window.open(pathToDesign, "designer")
+        let designerUrl = `../designer?${scope}=${shapeName}&tutorial=code`
+        window.open(designerUrl, "designer")
       })
     })
   }

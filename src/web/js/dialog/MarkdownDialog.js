@@ -15,10 +15,11 @@ class Dialog {
   }
 
   show(conf, figure) {
-    // let baseName = figure.attr("userData.file").replace(/\.shape$/, "")
-    let baseName = figure.NAME.replaceAll("_","/")
-    let pathToMD = conf.shapes.url + baseName + ".md"
-    $.get(pathToMD,  (content) => {
+    let scope = figure.attr("userData.scope")
+    let shapeName = figure.attr("userData.file")
+    let markdownName = shapeName.replace(/\.shape$/, ".md")
+    let contentUrl = conf.shapes[scope].file(markdownName)
+    $.get(contentUrl,  (content) => {
       let version = figure.VERSION
       let markdownParser = new Remarkable('full', this.defaults)
       markdownParser.inline.validateLink = (url)=> this.validateLink(url)
@@ -35,13 +36,13 @@ class Dialog {
       $('#markdownDialog').modal('show')
 
       $("#markdownDialog .editButton").off("click").on("click", () => {
-        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape&tutorial=code`
-        window.open(pathToDesign, "designer")
+        let designerUrl = `../designer?${scope}=${shapeName}`
+        window.open(designerUrl, "designer")
       })
 
       $("#markdownDialog .editButtonGuided").off("click").on("click", () => {
-        let pathToDesign = `../designer?timestamp=${new Date().getTime()}&global=${baseName}.shape&tutorial=code&tutorial=markdown`
-        window.open(pathToDesign, "designer")
+        let designerUrl = `../designer?${scope}=${shapeName}?tutorial=markdown`
+        window.open(designerUrl, "designer")
       })
     })
   }
